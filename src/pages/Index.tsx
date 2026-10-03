@@ -349,6 +349,17 @@ const Index = ({ embedded = false }: { embedded?: boolean } = {}) => {
 
       {!embedded && <SiteFooter />}
 
+      {!embedded && !chatOpen && (
+        <Button
+          className="no-print fixed bottom-[calc(1rem+env(safe-area-inset-bottom))] right-4 z-40 h-auto gap-2 rounded-full bg-orange-600 px-5 py-3 text-white shadow-lg shadow-orange-950/30 hover:bg-orange-500 focus-visible:ring-orange-400 lg:hidden"
+          onClick={() => setChatOpen(true)}
+          aria-label={chrome.demo.assistant}
+        >
+          <Sparkles className="h-5 w-5" />
+          {chrome.demo.assistant}
+        </Button>
+      )}
+
       {/* ── Mobile chat drawer — /demo only (desktop uses the inline right column) ── */}
       {!embedded && (
         <AssistantDrawer open={chatOpen} onOpenChange={setChatOpen} title={tr.assistant}>
