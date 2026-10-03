@@ -51,6 +51,14 @@ export interface MessageData {
   message: string;
 }
 
+/** Enum values need a translated heading; narrative risk text is already complete. */
+export function riskDisplayText(risk: string, tr: Record<string, string>): string {
+  if (risk === "alto" || risk === "medio" || risk === "bajo") {
+    return tr.risk_level_heading.replace("{level}", tr[`risk_level_${risk}`] ?? risk);
+  }
+  return risk;
+}
+
 export type NormalizedResponse =
   | { type: "evaluation"; data: EvaluateResponse }
   | { type: "message"; data: MessageData }

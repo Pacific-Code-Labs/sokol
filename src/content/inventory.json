@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-03T17:04:25.120Z",
+  "generatedAt": "2026-10-03T17:26:40.952Z",
   "counts": {
     "lib": 24,
     "component": 30,
@@ -702,6 +702,11 @@
     {
       "from": "components/assistant/EvaluationCard",
       "to": "contexts/LangContext",
+      "kind": "imports"
+    },
+    {
+      "from": "components/assistant/EvaluationCard",
+      "to": "lib/assistantResponse",
       "kind": "imports"
     },
     {

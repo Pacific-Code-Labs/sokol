@@ -1,6 +1,7 @@
 import { AlertTriangle, BookOpen, Check, Globe, ListChecks, MapPin } from "lucide-react";
 import { useLang } from "@/contexts/LangContext";
 import type { CrContextItem, EvaluateResponse } from "@/services/sokolApi";
+import { riskDisplayText } from "@/lib/assistantResponse";
 
 interface Props { data: EvaluateResponse; }
 
@@ -90,7 +91,7 @@ export function EvaluationCard({ data }: Props) {
 
       {data.risk && (
         <p className="text-xs font-semibold">
-          {tr.risk_level_heading.replace("{level}", tr[`risk_level_${data.risk}`] ?? data.risk)}
+          {riskDisplayText(data.risk, tr)}
         </p>
       )}
 

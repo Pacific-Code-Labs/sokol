@@ -38,4 +38,20 @@ describe("assistant response cards", () => {
     expect(screen.getByText("Low risk")).toBeInTheDocument();
     expect(screen.queryByText(/projectId|foundryUsed/)).not.toBeInTheDocument();
   });
+
+  it("preserves narrative evaluation risk without adding another risk label", () => {
+    const risk = "Riesgo alto. La cocina requiere revisión profesional.";
+    render(<EvaluationCard data={{ matchedRules: [], foundryUsed: true, requirements,
+      contextCr: [context], reference: ["NFPA 96"], risk } as EvaluateResponse} />);
+    expect(screen.getByText(risk, { exact: true })).toBeInTheDocument();
+    expect(screen.queryByText(`${risk} risk`)).not.toBeInTheDocument();
+  });
+
+  it("preserves narrative project risk without adding another risk label", () => {
+    const risk = "Riesgo alto. Confirme el diseño con un profesional.";
+    render(<ProjectCard data={{ projectId: null, project: { name: "Preview", risk } }} />);
+    expect(screen.getByText(risk, { exact: true })).toBeInTheDocument();
+    expect(screen.queryByText(`${risk} risk`)).not.toBeInTheDocument();
+  });
+
 });

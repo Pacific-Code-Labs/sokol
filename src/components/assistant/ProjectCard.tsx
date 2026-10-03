@@ -1,6 +1,7 @@
 import { AlertTriangle, BookOpen, Check, FolderPlus, Globe } from "lucide-react";
 import { useLang } from "@/contexts/LangContext";
 import type { ProjectCreatedData } from "@/lib/assistantResponse";
+import { riskDisplayText } from "@/lib/assistantResponse";
 
 interface Props { data: ProjectCreatedData; }
 
@@ -115,7 +116,7 @@ export function ProjectCard({ data }: Props) {
 
         {project.risk && (
           <p className="border-t border-border/60 pt-1.5 font-semibold">
-            {tr.risk_level_heading.replace("{level}", tr[`risk_level_${project.risk}`] ?? project.risk)}
+            {riskDisplayText(project.risk, tr)}
           </p>
         )}
 
