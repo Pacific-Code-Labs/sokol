@@ -8,12 +8,14 @@ import { useLang } from "@/contexts/LangContext";
 import { fmt } from "@/lib/chrome-i18n";
 import { sokolApi, BuildingType, DemoLimitError, QuotaError, type ConversationTurn, type DemoLimitResponse, type EvaluateResponse, type NeedsInfoQuestion, type ElectricalInputs, type ElectricalOccupancy } from "@/services/sokolApi";
 import { UpgradeModal } from "@/components/UpgradeModal";
+import { demoProjectSnapshot, demoRegistrationUrl } from "@/lib/demoProjectDraft";
 import { appHref, newTab } from "@/lib/links";
 import type { PageContext } from "@/contexts/AssistantContext";
 import {
   normalizeAssistantResponse,
   type AssistantResponseType,
   type ProjectCreatedData,
+  type ProjectPreview,
   type MessageData,
   type NeedsInfoData,
   type ElectricalLoadData,
@@ -46,7 +48,7 @@ function readErrorStatus(err: unknown): number | undefined {
   return undefined;
 }
 
-export type MsgType = "message" | "evaluation" | "project" | "error" | "demo_limit" | "prompt" | "needs_info" | "electrical" | "question";
+export type MsgType = "message" | "evaluation" | "project" | "error" | "demo_limit" | "prompt" | "needs_info" | "electrical" | "question" | "signup_link";
 
 /** FCR-100/118: which guided-demo step a quick-reply prompt drives. */
 export type PromptKind = "see_eval" | "create_project" | "see_electrical" | "create_account";
@@ -66,7 +68,7 @@ export interface Msg {
   /** Legacy: full evaluation response (kept for backward compat) */
   answer?: EvaluateResponse;
   /** New polymorphic payload */
-  payload?: EvaluateResponse | ProjectCreatedData | MessageData | DemoLimitResponse | PromptPayload | NeedsInfoData | ElectricalLoadData;
+  payload?: EvaluateResponse | ProjectCreatedData | MessageData | DemoLimitResponse | PromptPayload | NeedsInfoData | ElectricalLoadData | { href: string };
   /** For a one-at-a-time "question" turn: the submit button label. */
   submitLabel?: string;
 }
@@ -125,6 +127,7 @@ function toConversation(messages: Msg[]): ConversationTurn[] {
       (m) =>
         m.type !== "error" &&
         m.type !== "prompt" &&
+        m.type !== "signup_link" &&
         m.type !== "needs_info" &&
         (m.text?.trim()?.length ?? 0) > 0,
     )
@@ -172,6 +175,12 @@ export function ChatPanel({ buildingType, usage, areaM2, floors, occupants, ceil
   const demoEndedRef = useRef<boolean>(false);
   const projectReofferedRef = useRef<boolean>(false); // FCR-115: re-offer the project once on decline
   const projectCreatedRef = useRef<boolean>(false); // FCR-116: a project preview already shown → stop offering "create project", go to sign-up
+  const restoredProject = [...messages].reverse().find((m) => m.type === "project")?.payload as ProjectCreatedData | undefined;
+  const restoredElectrical = [...messages].reverse().find((m) => m.type === "electrical")?.payload;
+  const previewRef = useRef<ProjectPreview | null>(restoredProject?.projectId == null ? restoredProject?.project ?? null : null);
+  const electricalSnapshotRef = useRef<Record<string, unknown> | null>(restoredElectrical ? { result: restoredElectrical } : null);
+  const handoffRef = useRef<string | null>(null);
+  const savingDraftRef = useRef(false);
   // FCR-114: a conversational, one-question-at-a-time flow (intake + agent needs_info).
   const questionFlowRef = useRef<{
     qs: NeedsInfoQuestion[];
@@ -227,6 +236,7 @@ export function ChatPanel({ buildingType, usage, areaM2, floors, occupants, ceil
         projectCreatedRef.current = true;
         const name = norm.data.project?.name || tr.chat_project_fallback;
         const isPreview = norm.data.projectId == null;
+        if (isPreview) { previewRef.current = norm.data.project; handoffRef.current = null; }
         setMessages((m) => [
           ...m,
           {
@@ -418,6 +428,7 @@ export function ChatPanel({ buildingType, usage, areaM2, floors, occupants, ceil
     demoEndedRef.current = false;
     projectReofferedRef.current = false;
     projectCreatedRef.current = false;
+    previewRef.current = null; electricalSnapshotRef.current = null; handoffRef.current = null;
     activeScenarioRef.current = scenario;
     activeQueryRef.current = query;
     ask(query, { teaser: true, demoNext: "see_eval", demoStep: "teaser" });
@@ -476,6 +487,7 @@ export function ChatPanel({ buildingType, usage, areaM2, floors, occupants, ceil
     setIsLoading(true);
     try {
       const result: ElectricalLoadData = await sokolApi.evaluateDemoElectrical(inputs);
+      electricalSnapshotRef.current = { inputs, result };
       const summary =
         lang === "es"
           ? `Estudio eléctrico preliminar: ${result.demandKva} kVA demandados · transformador sugerido ${result.suggestedTransformerKva} kVA.`
@@ -488,6 +500,36 @@ export function ChatPanel({ buildingType, usage, areaM2, floors, occupants, ceil
     } catch (err) {
       handleError(err);
     } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const openRegistration = async () => {
+    if (savingDraftRef.current) return;
+    if (!previewRef.current) {
+      window.open(appHref(lang, "/register"), newTab.target, "noopener,noreferrer");
+      return;
+    }
+    // Open synchronously during the click; detach the opener before navigating.
+    const popup = window.open("about:blank", newTab.target);
+    if (popup) popup.opener = null;
+    savingDraftRef.current = true;
+    setIsLoading(true);
+    try {
+      if (!handoffRef.current) {
+        const draft = await sokolApi.createDemoProjectDraft(demoProjectSnapshot(previewRef.current, electricalSnapshotRef.current));
+        handoffRef.current = demoRegistrationUrl(appHref(lang, "/register"), draft);
+      }
+      const href = handoffRef.current;
+      if (popup && !popup.closed) popup.location.replace(href);
+      // Also works when the browser blocks popups or the visitor closes the blank tab.
+      setMessages((m) => [...m, { role: "assistant", type: "signup_link", text: tr.demoDraftReady, payload: { href } }]);
+    } catch {
+      popup?.close();
+      setMessages((m) => [...m, { role: "assistant", type: "error", text: tr.demoDraftError }]);
+      appendPrompt("create_account");
+    } finally {
+      savingDraftRef.current = false;
       setIsLoading(false);
     }
   };
@@ -545,8 +587,7 @@ export function ChatPanel({ buildingType, usage, areaM2, floors, occupants, ceil
         runDemoElectrical();
         break;
       case "create_account":
-        // Sign-up lives in the app (its own domain), opened in a new tab like every app link.
-        window.open(appHref(lang, "/register"), newTab.target, "noopener,noreferrer");
+        void openRegistration();
         break;
     }
   };
@@ -607,6 +648,12 @@ export function ChatPanel({ buildingType, usage, areaM2, floors, occupants, ceil
           {data && <div className="mt-3"><EvaluationCard data={data} /></div>}
         </>
       );
+    }
+    if (type === "signup_link") {
+      return <div className="space-y-3"><TextMessage text={m.text} />
+        <a className="inline-flex rounded-full bg-primary px-4 py-2 text-primary-foreground font-medium"
+          href={(m.payload as { href: string }).href} {...newTab}>{tr.demoDraftContinue}</a>
+      </div>;
     }
     if (type === "project") {
       return (

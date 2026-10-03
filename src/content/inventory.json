@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-10-03T17:48:55.319Z",
+  "generatedAt": "2026-10-03T18:26:20.086Z",
   "counts": {
-    "lib": 24,
+    "lib": 25,
     "component": 30,
     "content": 14,
     "context": 3,
@@ -380,6 +380,13 @@
       "type": "lib",
       "group": "lib",
       "path": "src/lib/content-lang.ts"
+    },
+    {
+      "id": "lib/demoProjectDraft",
+      "label": "demoProjectDraft",
+      "type": "lib",
+      "group": "lib",
+      "path": "src/lib/demoProjectDraft.ts"
     },
     {
       "id": "lib/demoScenarios",
@@ -916,6 +923,11 @@
     },
     {
       "from": "components/ChatPanel",
+      "to": "lib/demoProjectDraft",
+      "kind": "imports"
+    },
+    {
+      "from": "components/ChatPanel",
       "to": "lib/demoScenarios",
       "kind": "imports"
     },
@@ -1192,6 +1204,11 @@
     {
       "from": "lib/content-lang",
       "to": "lib/i18n",
+      "kind": "imports"
+    },
+    {
+      "from": "lib/demoProjectDraft",
+      "to": "lib/assistantResponse",
       "kind": "imports"
     },
     {

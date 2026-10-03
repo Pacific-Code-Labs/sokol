@@ -471,6 +471,9 @@ function asDemoLimit(obj: unknown): DemoLimitResponse | null {
 }
 
 export const sokolApi = {
+  createDemoProjectDraft(body: Record<string, unknown>) {
+    return call<{ draftId: string; claimToken: string; expiresAt: string }>("POST", "/demo/project-drafts", body);
+  },
   /**
    * GET /rules — returns rules grouped by fire protection category.
    * All params are optional; omitting them returns all groups.

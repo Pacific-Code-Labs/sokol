@@ -158,7 +158,10 @@
       "demoStep4Q": "Want me to show a preliminary electrical study (loads, kVA and single-line diagram) for this case?",
       "demoWelcomeSubtitle": "Describe your building and get the required systems, applicable NFPA standards, and Costa Rica regulatory context.",
       "demoWelcomeTitle": "Your fire-protection engineer, instantly.",
-      "demoYes": "Yes, go ahead"
+      "demoYes": "Yes, go ahead",
+      "demoDraftReady": "Your draft is ready. Register or sign in to save it in your projects. The link expires in 24 hours.",
+      "demoDraftError": "We could not save the draft. Your preview is still here; retry before registering.",
+      "demoDraftContinue": "Continue with my project"
     },
     "electrical": {
       "elec_assumptions": "Assumptions",

@@ -158,7 +158,10 @@
       "demoStep4Q": "¿Te muestro un estudio eléctrico preliminar (cargas, kVA y diagrama unifilar) de este caso?",
       "demoWelcomeSubtitle": "Describe tu edificio y obtén los sistemas requeridos, las normas NFPA aplicables y el contexto regulatorio de Costa Rica.",
       "demoWelcomeTitle": "Tu ingeniero de protección contra incendios, al instante.",
-      "demoYes": "Sí, adelante"
+      "demoYes": "Sí, adelante",
+      "demoDraftReady": "Tu borrador está listo. Regístrate o inicia sesión para guardarlo en tus proyectos. El enlace vence en 24 horas.",
+      "demoDraftError": "No pudimos guardar el borrador. Tu vista previa sigue aquí; reintenta antes de registrarte.",
+      "demoDraftContinue": "Continuar con mi proyecto"
     },
     "electrical": {
       "elec_assumptions": "Supuestos",

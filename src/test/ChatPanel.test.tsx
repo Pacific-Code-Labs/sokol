@@ -5,7 +5,7 @@ import { afterEach, expect, it, vi } from "vitest";
 import { t } from "@/lib/i18n";
 import { ChatPanel, type Msg } from "@/components/ChatPanel";
 
-const api = vi.hoisted(() => ({ evaluateDemo: vi.fn(), evaluateDemoElectrical: vi.fn() }));
+const api = vi.hoisted(() => ({ evaluateDemo: vi.fn(), evaluateDemoElectrical: vi.fn(), createDemoProjectDraft: vi.fn() }));
 vi.mock("@/services/sokolApi", () => ({
   sokolApi: api, BuildingType: { residencial: 1, comercial: 2, industrial: 3 },
   DemoLimitError: class extends Error {}, QuotaError: class extends Error {},
@@ -73,4 +73,58 @@ it("offers registration after evaluation, project preview and electrical study",
   expect(screen.getByRole("button", { name: t.en.demoCreateAccount })).toBeInTheDocument();
   expect(api.evaluateDemo.mock.calls.map(([body]) => body.context.demo_step)).toEqual(["teaser", "full_evaluation", "project"]);
   expect(api.evaluateDemoElectrical).toHaveBeenCalledOnce();
+});
+
+it("stores the preview before opening signup and offers a link when popups are blocked", async () => {
+  const draft = { draftId: "0f24de61-f193-4fbb-ae93-92802062d21b", claimToken: "a".repeat(43), expiresAt: "2099-01-01T00:00:00Z" };
+  api.createDemoProjectDraft.mockResolvedValue(draft);
+  const open = vi.spyOn(window, "open").mockReturnValue(null);
+  function Harness() {
+    const [messages, setMessages] = useState<Msg[]>([
+      { role: "assistant", text: "Office preview", type: "project", payload: {
+        projectId: null, project: { name: "Office", buildingType: "comercial", usage: "office", risk: "medio",
+          requirements: ["Review extinguishers"], reference: ["NFPA 10"], contextCr: ["CR context"] },
+      } },
+      { role: "assistant", text: "Register", type: "prompt", payload: {
+        kind: "create_account", prompt: "Register", options: [{ label: t.en.demoCreateAccount, value: "yes" }],
+      } },
+    ]);
+    return <ChatPanel demo buildingType={2} usage="office" messages={messages} setMessages={setMessages} />;
+  }
+  render(<MemoryRouter><Harness /></MemoryRouter>);
+  fireEvent.click(screen.getByRole("button", { name: t.en.demoCreateAccount }));
+  const link = await screen.findByRole("link", { name: t.en.demoDraftContinue });
+  const url = new URL(link.getAttribute("href")!);
+  expect(url.pathname).toBe("/en/register");
+  expect(url.searchParams.get("draft")).toBe(draft.draftId);
+  expect(url.search).not.toContain(draft.claimToken);
+  expect(new URLSearchParams(url.hash.slice(1)).get("claim")).toBe(draft.claimToken);
+  expect(api.createDemoProjectDraft).toHaveBeenCalledWith(expect.objectContaining({
+    name: "Office", building_type: "comercial", requirements: ["Review extinguishers"], context_cr: ["CR context"],
+  }));
+  expect(api.evaluateDemo).not.toHaveBeenCalled();
+  open.mockRestore();
+});
+
+it("keeps the preview and offers retry when draft storage fails", async () => {
+  api.createDemoProjectDraft.mockRejectedValue(new Error("offline"));
+  const popup = { opener: null, close: vi.fn(), closed: false, location: { replace: vi.fn() } };
+  const open = vi.spyOn(window, "open").mockReturnValue(popup as unknown as Window);
+  function Harness() {
+    const [messages, setMessages] = useState<Msg[]>([
+      { role: "assistant", text: "Office preview", type: "project", payload: { projectId: null, project: { name: "Office" } } },
+      { role: "assistant", text: "Register", type: "prompt", payload: {
+        kind: "create_account", prompt: "Register", options: [{ label: t.en.demoCreateAccount, value: "yes" }],
+      } },
+    ]);
+    return <ChatPanel demo buildingType={2} usage="office" messages={messages} setMessages={setMessages} />;
+  }
+  render(<MemoryRouter><Harness /></MemoryRouter>);
+  fireEvent.click(screen.getByRole("button", { name: t.en.demoCreateAccount }));
+  expect(await screen.findByText(t.en.demoDraftError)).toBeInTheDocument();
+  expect(screen.getByText("Office preview")).toBeInTheDocument();
+  expect(popup.close).toHaveBeenCalledOnce();
+  expect(popup.location.replace).not.toHaveBeenCalled();
+  expect(screen.getAllByRole("button", { name: t.en.demoCreateAccount }).some((b) => !b.hasAttribute("disabled"))).toBe(true);
+  open.mockRestore();
 });
