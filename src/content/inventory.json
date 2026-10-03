@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-03T17:38:23.683Z",
+  "generatedAt": "2026-10-03T17:38:47.529Z",
   "counts": {
     "lib": 24,
     "component": 30,
@@ -1287,11 +1287,6 @@
     {
       "from": "pages/Index",
       "to": "components/ChatPanel",
-      "kind": "imports"
-    },
-    {
-      "from": "pages/Index",
-      "to": "components/HeaderSlot",
       "kind": "imports"
     },
     {

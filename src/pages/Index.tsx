@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
 import { useQuery } from "@tanstack/react-query";
-import { HeaderActions } from "@/components/HeaderSlot";
 import { SiteFooter } from "@/components/SiteFooter";
 import { BuildingSelector } from "@/components/BuildingSelector";
 import { CategoryCard } from "@/components/CategoryCard";
@@ -133,19 +132,7 @@ const Index = ({ embedded = false }: { embedded?: boolean } = {}) => {
   return (
     /* Outer: natural scroll on mobile, viewport-locked on desktop */
     <div className="flex flex-col scanline" style={{ minHeight: embedded ? "auto" : "calc(100dvh - 4rem)" }}>
-      {!embedded && (
-        <HeaderActions>
-          <Button
-            variant="outline"
-            size="sm"
-            className="gap-2 lg:hidden"
-            onClick={() => setChatOpen(true)}
-          >
-            <Sparkles className="h-4 w-4" />
-            {chrome.demo.assistant}
-          </Button>
-        </HeaderActions>
-      )}
+
 
       {/*
         Mobile:  flex-col, everything stacks, page scrolls normally.
