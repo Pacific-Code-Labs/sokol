@@ -6,10 +6,10 @@ export function DemoSkeleton() {
   const { tr } = useLang();
   return (
     <div className="flex min-h-[calc(100dvh-4rem)] flex-col">
-      <main aria-busy="true" className="container flex-1 px-4 py-4">
+      <main aria-busy="true" className="container flex-1 px-4 py-4 lg:max-w-[1600px]">
         <span className="sr-only">{tr.loading}</span>
         <div className="flex flex-col gap-4 lg:flex-row lg:items-start">
-          <div className="flex flex-col gap-4 lg:flex-1">
+          <div className="flex min-w-0 flex-col gap-4 lg:flex-1">
             <Skeleton className="h-6 w-40 rounded-full" />
             <Skeleton className="h-9 w-3/4" />
             <Skeleton className="h-4 w-1/2" />
@@ -23,7 +23,7 @@ export function DemoSkeleton() {
             </div>
             <ListSkeleton rows={4} />
           </div>
-          <div className="hidden lg:block lg:w-[360px] lg:shrink-0">
+          <div className="hidden lg:block lg:w-[56%] lg:min-w-0 lg:shrink-0">
             <Skeleton className="h-[calc(100dvh-7rem)] w-full" />
           </div>
         </div>

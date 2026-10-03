@@ -150,11 +150,11 @@ const Index = ({ embedded = false }: { embedded?: boolean } = {}) => {
         Mobile:  flex-col, everything stacks, page scrolls normally.
         Desktop: flex-row, left col scrolls independently, right col (chat) is pinned.
       */}
-      <main className={cn("container flex-1 px-4 flex flex-col gap-4", embedded ? "py-2" : "py-4")}>
+      <main className={cn("container flex-1 px-4 flex flex-col gap-4", embedded ? "py-2" : "py-4 lg:max-w-[1600px]")}>
         <div className="flex flex-col gap-4 lg:flex-row lg:items-start">
 
           {/* ── LEFT COLUMN ── */}
-          <div className="flex flex-col gap-4 lg:flex-1">
+          <div className="flex min-w-0 flex-col gap-4 lg:flex-1">
 
             {/* Title + badge */}
             <section className={cn(embedded ? "space-y-1" : "space-y-2")}>
@@ -321,7 +321,7 @@ const Index = ({ embedded = false }: { embedded?: boolean } = {}) => {
           {!embedded && (
             <div
               className={cn(
-                "no-print hidden lg:flex lg:w-[360px] lg:shrink-0 lg:flex-col lg:sticky lg:top-[4.5rem]"
+                "no-print hidden lg:flex lg:w-[56%] lg:min-w-0 lg:shrink-0 lg:flex-col lg:sticky lg:top-[4.5rem]"
               )}
               style={{ height: "calc(100dvh - 5.5rem)" }}
             >

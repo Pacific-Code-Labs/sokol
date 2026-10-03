@@ -83,7 +83,7 @@ export function ElectricalLoadCard({ data }: Props) {
       </div>
 
       {/* Summary stats */}
-      <div className="grid grid-cols-2 gap-2 text-xs sm:grid-cols-3 md:grid-cols-4">
+      <div className="grid grid-cols-2 gap-2 text-xs lg:p-3 lg:text-sm sm:grid-cols-3 md:grid-cols-4">
         <Stat label={tr.elec_installed_va} value={`${fmt(data.installedVa)} VA`} />
         <Stat label={tr.elec_demanded_load} value={`${fmt(data.demandedVa)} VA`} />
         <Stat label={tr.elec_demand_kva} value={`${fmt(data.demandKva)} kVA`} />
@@ -169,7 +169,7 @@ export function ElectricalLoadCard({ data }: Props) {
             {data.mandatedProvisions.map((p, i) => {
               const required = p.status === "required";
               return (
-                <li key={i} className="flex gap-2 text-xs leading-relaxed">
+                <li key={i} className="flex gap-2 text-xs lg:p-3 lg:text-sm leading-relaxed">
                   {required ? (
                     <AlertTriangle className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[hsl(var(--risk-medium))]" aria-hidden />
                   ) : (
@@ -191,7 +191,7 @@ export function ElectricalLoadCard({ data }: Props) {
 
       {/* Assumptions */}
       {data.assumptions?.length > 0 && (
-        <div className="rounded-md border border-border bg-background/30 p-2 text-xs text-muted-foreground">
+        <div className="rounded-md border border-border bg-background/30 p-2 text-xs lg:p-3 lg:text-sm text-muted-foreground">
           <div className="mb-1 flex items-center gap-1.5 font-semibold text-foreground/80">
             <Info className="h-3.5 w-3.5" /> {tr.elec_assumptions}
           </div>

@@ -51,7 +51,7 @@ export function ProjectCard({ data }: Props) {
           : tr.project_created_title}
       </div>
 
-      <div className="rounded-md border border-border bg-background/40 p-2 text-xs space-y-2">
+      <div className="rounded-md border border-border bg-background/40 p-2 text-xs lg:p-3 lg:text-sm space-y-2">
         <div className="text-sm font-semibold text-foreground">{name}</div>
 
         {chars.length > 0 && (

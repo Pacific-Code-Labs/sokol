@@ -31,7 +31,7 @@ export function EvaluationCard({ data }: Props) {
   return (
     <div className="space-y-2">
       {data.matchedRules?.length > 0 && (
-        <div className="rounded-md border border-border bg-background/40 p-2 text-xs">
+        <div className="rounded-md border border-border bg-background/40 p-2 text-xs lg:p-3 lg:text-sm">
           <div className="flex items-center gap-1.5 font-semibold text-accent">
             <MapPin className="h-3.5 w-3.5" /> {tr.crLabel}
           </div>
@@ -44,7 +44,7 @@ export function EvaluationCard({ data }: Props) {
       )}
 
       {data.foundryUsed && data.requirements?.length > 0 && (
-        <div className="rounded-md border border-border bg-background/30 p-2 text-xs">
+        <div className="rounded-md border border-border bg-background/30 p-2 text-xs lg:p-3 lg:text-sm">
           <div className="mb-1.5 flex items-center gap-1.5 font-semibold text-accent">
             <ListChecks className="h-3.5 w-3.5" /> {tr.requirements}:
           </div>
@@ -60,7 +60,7 @@ export function EvaluationCard({ data }: Props) {
       )}
 
       {data.foundryUsed && contextItems.length > 0 && (
-        <div className="rounded-md border border-border bg-background/20 p-2 text-xs">
+        <div className="rounded-md border border-border bg-background/20 p-2 text-xs lg:p-3 lg:text-sm">
           <div className="mb-1.5 flex items-center gap-1.5 font-semibold text-accent">
             <Globe className="h-3.5 w-3.5" /> {tr.crContextTitle}:
           </div>
@@ -96,7 +96,7 @@ export function EvaluationCard({ data }: Props) {
       )}
 
       {data.risk === "alto" && (
-        <div className="flex items-start gap-2 rounded-md border border-[hsl(var(--risk-high)/0.4)] bg-[hsl(var(--risk-high)/0.1)] p-2 text-xs text-[hsl(var(--risk-high))]">
+        <div className="flex items-start gap-2 rounded-md border border-[hsl(var(--risk-high)/0.4)] bg-[hsl(var(--risk-high)/0.1)] p-2 text-xs lg:p-3 lg:text-sm text-[hsl(var(--risk-high))]">
           <AlertTriangle className="mt-0.5 h-3.5 w-3.5 shrink-0" />
           <span>
             <strong>{tr.riskWarning}:</strong>{" "}
