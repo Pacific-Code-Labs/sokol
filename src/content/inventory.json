@@ -1,8 +1,8 @@
 {
-  "generatedAt": "2026-10-03T18:26:20.086Z",
+  "generatedAt": "2026-10-03T21:48:04.449Z",
   "counts": {
     "lib": 25,
-    "component": 30,
+    "component": 31,
     "content": 14,
     "context": 3,
     "page": 4,
@@ -163,6 +163,13 @@
       "type": "component",
       "group": "component",
       "path": "src/components/LangLayout.tsx"
+    },
+    {
+      "id": "components/LanguageToggle",
+      "label": "LanguageToggle",
+      "type": "component",
+      "group": "component",
+      "path": "src/components/LanguageToggle.tsx"
     },
     {
       "id": "components/PageTransition",
@@ -973,6 +980,11 @@
     },
     {
       "from": "components/Header",
+      "to": "components/LanguageToggle",
+      "kind": "imports"
+    },
+    {
+      "from": "components/Header",
       "to": "components/ThemeToggle",
       "kind": "imports"
     },
@@ -1033,6 +1045,16 @@
     },
     {
       "from": "components/LangLayout",
+      "to": "lib/paths",
+      "kind": "imports"
+    },
+    {
+      "from": "components/LanguageToggle",
+      "to": "contexts/LangContext",
+      "kind": "imports"
+    },
+    {
+      "from": "components/LanguageToggle",
       "to": "lib/paths",
       "kind": "imports"
     },

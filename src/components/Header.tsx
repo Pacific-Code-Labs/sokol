@@ -1,14 +1,15 @@
-import { Languages, Home, LogIn, Menu, LayoutGrid, ListOrdered, Tag, Sparkles } from "lucide-react";
+import { Home, LogIn, Menu, LayoutGrid, ListOrdered, Tag, Sparkles } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { BrandLogo, Button, buttonVariants, Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@pacific-code-labs/sokol-design-system";
 import { useLang } from "@/contexts/LangContext";
+import { LanguageToggle } from "@/components/LanguageToggle";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { tChrome } from "@/lib/chrome-i18n";
 import { cn } from "@/lib/utils";
 import { getBrandingVM } from "@/services/branding.service";
-import { localizedPath, runLangSwitch, stripLangPrefix } from "@/lib/paths";
+import { localizedPath, stripLangPrefix } from "@/lib/paths";
 import { appHref, newTab } from "@/lib/links";
 
 interface HeaderProps {
@@ -43,15 +44,9 @@ export function Header({ actionsRef }: HeaderProps) {
 
   const chrome = tChrome(lang);
   const brand = getBrandingVM(lang);
-  const nextLang = lang === "es" ? "en" : "es";
 
   const closeMobile = () => setMobileOpen(false);
 
-  // Language toggle navigates to the same page under the other lang prefix
-  // (wrapped in the lang animation). LangLayout's effect then syncs the context.
-  const switchLang = () => {
-    runLangSwitch(navigate, localizedPath(nextLang, rest));
-  };
 
   const hrefFor = (item: NavItem) =>
     item.section ? `${localizedPath(lang, "/")}#${item.section}` : localizedPath(lang, item.path);
@@ -133,10 +128,7 @@ export function Header({ actionsRef }: HeaderProps) {
             {chrome.nav.signIn}
           </a>
           <ThemeToggle />
-          <Button variant="outline" size="sm" onClick={switchLang}>
-            <Languages className="h-4 w-4" />
-            {chrome.nav.langSwitchTo}
-          </Button>
+          <LanguageToggle />
 
           {/* Mobile / tablet menu */}
           <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>

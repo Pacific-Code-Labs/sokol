@@ -122,7 +122,10 @@
       "rule_sec_install": "Installation",
       "rule_sec_risks": "Failure risks",
       "rule_sec_tech": "Technical",
-      "loading": "Loading…"
+      "loading": "Loading…",
+      "lang_toggle_label": "Language",
+      "lang_toggle_spanish": "Español",
+      "lang_toggle_english": "English"
     },
     "demo": {
       "demoAccountQ": "Sign up free for the full evaluation and to save your project.",
