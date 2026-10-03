@@ -321,7 +321,7 @@ const Index = ({ embedded = false }: { embedded?: boolean } = {}) => {
           {!embedded && (
             <div
               className={cn(
-                "no-print hidden lg:flex lg:w-[56%] lg:min-w-0 lg:shrink-0 lg:flex-col lg:sticky lg:top-[4.5rem]"
+                "no-print hidden lg:flex lg:w-[40%] lg:min-w-0 lg:shrink-0 lg:flex-col lg:sticky lg:top-[4.5rem]"
               )}
               style={{ height: "calc(100dvh - 5.5rem)" }}
             >

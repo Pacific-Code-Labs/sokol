@@ -23,7 +23,7 @@ export function DemoSkeleton() {
             </div>
             <ListSkeleton rows={4} />
           </div>
-          <div className="hidden lg:block lg:w-[56%] lg:min-w-0 lg:shrink-0">
+          <div className="hidden lg:block lg:w-[40%] lg:min-w-0 lg:shrink-0">
             <Skeleton className="h-[calc(100dvh-7rem)] w-full" />
           </div>
         </div>
