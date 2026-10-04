@@ -10,6 +10,7 @@ import { tChrome } from "@/lib/chrome-i18n";
 import { cn } from "@/lib/utils";
 import { getBrandingVM } from "@/services/branding.service";
 import { localizedPath, stripLangPrefix } from "@/lib/paths";
+import { useLandingSection } from "@/hooks/useLandingSection";
 import { appHref, newTab } from "@/lib/links";
 
 interface HeaderProps {
@@ -40,6 +41,8 @@ export function Header({ actionsRef }: HeaderProps) {
   const navigate = useNavigate();
   const { rest } = stripLangPrefix(pathname);
   const onHome = rest === "/";
+  const onLanding = onHome || rest === "/features" || rest === "/how";
+  const visibleSection = useLandingSection(onLanding, pathname);
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const chrome = tChrome(lang);
@@ -50,12 +53,12 @@ export function Header({ actionsRef }: HeaderProps) {
 
   const hrefFor = (item: NavItem) =>
     localizedPath(lang, item.section ? `/${item.section}` : item.path);
-  const isActive = (item: NavItem) => item.section ? rest === `/${item.section}` : !!item.path && rest.startsWith(item.path);
+  const isActive = (item: NavItem) => item.section ? onLanding && visibleSection === item.section : !!item.path && rest.startsWith(item.path);
 
-  // Section routes preserve clean paths; selecting the active section scrolls to it again.
+  // Scroll highlights follow the viewport; repeat clicks on the current path still scroll.
   const onNavClick = (item: NavItem) => (e: React.MouseEvent) => {
     closeMobile();
-    if (isActive(item)) {
+    if (item.section ? rest === `/${item.section}` : isActive(item)) {
       e.preventDefault();
       if (item.section) document.getElementById(item.section)?.scrollIntoView({ behavior: "smooth" });
       else window.scrollTo({ top: 0, behavior: "smooth" });
@@ -63,7 +66,7 @@ export function Header({ actionsRef }: HeaderProps) {
   };
 
   return (
-    <header className={cn((onHome || rest === "/how" || rest === "/features") && "premium-header", "sticky top-0 z-30 border-b border-border bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60 no-print")}>
+    <header className={cn(onLanding && "premium-header", "sticky top-0 z-30 border-b border-border bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60 no-print")}>
       <div className="container flex h-16 items-center justify-between gap-4">
         <div className="flex min-w-0 items-center gap-8">
           <Link to={localizedPath(lang, "/")} onClick={(event) => {
@@ -94,7 +97,7 @@ export function Header({ actionsRef }: HeaderProps) {
                 key={item.key}
                 to={hrefFor(item)}
                 onClick={onNavClick(item)}
-                aria-current={isActive(item) ? "page" : undefined}
+                aria-current={isActive(item) ? (item.section ? "location" : "page") : undefined}
                 className={
                   item.cta && !isActive(item)
                     ? cn(buttonVariants({ size: "sm" }), "ml-2")
@@ -157,7 +160,7 @@ export function Header({ actionsRef }: HeaderProps) {
                     key={item.key}
                     to={hrefFor(item)}
                     onClick={onNavClick(item)}
-                    aria-current={isActive(item) ? "page" : undefined}
+                    aria-current={isActive(item) ? (item.section ? "location" : "page") : undefined}
                     className={cn(buttonVariants({ variant: "ghost" }), "justify-start", isActive(item) && "bg-muted")}
                   >
                     <item.Icon className="h-4 w-4" />

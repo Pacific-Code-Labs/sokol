@@ -1,10 +1,11 @@
 {
-  "generatedAt": "2026-10-04T23:24:02.636Z",
+  "generatedAt": "2026-10-04T23:32:11.217Z",
   "counts": {
-    "lib": 30,
+    "lib": 31,
     "component": 38,
     "content": 14,
     "context": 3,
+    "hook": 1,
     "page": 4,
     "repository": 3,
     "service": 3
@@ -396,6 +397,13 @@
       "path": "src/contexts/ThemeContext.tsx"
     },
     {
+      "id": "hooks/useLandingSection",
+      "label": "useLandingSection",
+      "type": "hook",
+      "group": "hook",
+      "path": "src/hooks/useLandingSection.ts"
+    },
+    {
       "id": "index.css",
       "label": "index.css",
       "type": "lib",
@@ -632,6 +640,13 @@
       "type": "lib",
       "group": "lib",
       "path": "src/test/LandingInteractions.test.tsx"
+    },
+    {
+      "id": "test/LandingSection.test",
+      "label": "LandingSection.test",
+      "type": "lib",
+      "group": "lib",
+      "path": "src/test/LandingSection.test.tsx"
     },
     {
       "id": "test/ResponseCards.test",
@@ -1085,6 +1100,11 @@
     {
       "from": "components/Header",
       "to": "contexts/LangContext",
+      "kind": "imports"
+    },
+    {
+      "from": "components/Header",
+      "to": "hooks/useLandingSection",
       "kind": "imports"
     },
     {
@@ -1790,6 +1810,11 @@
     {
       "from": "test/LandingInteractions.test",
       "to": "services/landing.service",
+      "kind": "imports"
+    },
+    {
+      "from": "test/LandingSection.test",
+      "to": "hooks/useLandingSection",
       "kind": "imports"
     },
     {
