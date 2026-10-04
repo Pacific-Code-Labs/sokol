@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Navigate, Outlet, useLocation, useParams } from "react-router-dom";
+import { Navigate, Outlet, useLocation, useNavigate, useParams } from "react-router-dom";
 import { useLang } from "@/contexts/LangContext";
 import { DEFAULT_LANG, isLang, stripLangPrefix } from "@/lib/paths";
 import { PageTransition } from "@/components/PageTransition";
@@ -19,6 +19,12 @@ import { HeaderSlotContext } from "@/lib/header-slot";
 export function LangLayout() {
   const { lang: urlLang } = useParams();
   const location = useLocation();
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (location.pathname.length > 1 && location.pathname.endsWith("/")) {
+      navigate(location.pathname.replace(/\/+$/, "") + location.search + location.hash, { replace: true });
+    }
+  }, [location.pathname, location.search, location.hash, navigate]);
   const { lang: ctxLang, setLang } = useLang();
   const [actionsSlot, setActionsSlot] = useState<HTMLElement | null>(null);
 

@@ -11,7 +11,6 @@ import { Skeleton } from "@pacific-code-labs/sokol-design-system";
 import { useLang } from "@/contexts/LangContext";
 import { useAssistant } from "@/contexts/AssistantContext";
 import { sokolApi, BuildingType, RuleCategory } from "@/services/sokolApi";
-import { type Msg } from "@/components/ChatPanel";
 import { type DemoScenarioParams } from "@/lib/demoScenarios";
 import { cn } from "@/lib/utils";
 import { tChrome, fmt } from "@/lib/chrome-i18n";
@@ -55,7 +54,8 @@ const Index = ({ embedded = false }: { embedded?: boolean } = {}) => {
   const [page, setPage]                 = useState<number>(0);
   const [selectedCategory, setSelectedCategory] = useState<RuleCategory | null>(null);
   const [chatOpen, setChatOpen] = useState(false);
-  const [chatMessages, setChatMessages] = useState<Msg[]>([]);
+  const chatMessages = assistant.messages;
+  const setChatMessages = assistant.setMessages;
   // Mobile chat opens in AssistantDrawer (vaul) — it manages its own body-scroll
   // lock, so no manual overflow toggling here (FCR-113).
 

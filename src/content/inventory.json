@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-10-03T21:48:04.449Z",
+  "generatedAt": "2026-10-04T00:39:25.745Z",
   "counts": {
-    "lib": 25,
+    "lib": 26,
     "component": 31,
     "content": 14,
     "context": 3,
@@ -564,6 +564,13 @@
       "path": "src/test/ResponseCards.test.tsx"
     },
     {
+      "id": "test/seo.test",
+      "label": "seo.test",
+      "type": "lib",
+      "group": "lib",
+      "path": "src/test/seo.test.tsx"
+    },
+    {
       "id": "test/setup",
       "label": "setup",
       "type": "lib",
@@ -645,7 +652,17 @@
     },
     {
       "from": "components/assistant/AssistantAvatar",
+      "to": "contexts/LangContext",
+      "kind": "imports"
+    },
+    {
+      "from": "components/assistant/AssistantAvatar",
       "to": "lib/utils",
+      "kind": "imports"
+    },
+    {
+      "from": "components/assistant/AssistantAvatar",
+      "to": "services/branding.service",
       "kind": "imports"
     },
     {
@@ -1449,6 +1466,11 @@
       "kind": "imports"
     },
     {
+      "from": "pages/Pricing",
+      "to": "services/sokolApi",
+      "kind": "imports"
+    },
+    {
       "from": "repositories/branding.repository",
       "to": "repositories/content.repository",
       "kind": "imports"
@@ -1574,8 +1596,18 @@
       "kind": "imports"
     },
     {
+      "from": "services/sokolApi",
+      "to": "lib/plans",
+      "kind": "imports"
+    },
+    {
       "from": "test/ChatPanel.test",
       "to": "components/ChatPanel",
+      "kind": "imports"
+    },
+    {
+      "from": "test/ChatPanel.test",
+      "to": "contexts/AssistantContext",
       "kind": "imports"
     },
     {
@@ -1601,6 +1633,26 @@
     {
       "from": "test/ResponseCards.test",
       "to": "services/sokolApi",
+      "kind": "imports"
+    },
+    {
+      "from": "test/seo.test",
+      "to": "content/branding",
+      "kind": "imports"
+    },
+    {
+      "from": "test/seo.test",
+      "to": "content/seo",
+      "kind": "imports"
+    },
+    {
+      "from": "test/seo.test",
+      "to": "lib/i18n",
+      "kind": "imports"
+    },
+    {
+      "from": "test/seo.test",
+      "to": "lib/seo",
       "kind": "imports"
     }
   ]

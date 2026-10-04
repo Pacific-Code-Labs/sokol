@@ -70,7 +70,14 @@ export function Header({ actionsRef }: HeaderProps) {
     <header className="sticky top-0 z-30 border-b border-border bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60 no-print">
       <div className="container flex h-16 items-center justify-between gap-4">
         <div className="flex min-w-0 items-center gap-8">
-          <Link to={localizedPath(lang, "/")} className="flex shrink-0 items-center gap-3 hover:opacity-90 transition-opacity">
+          <Link to={localizedPath(lang, "/")} onClick={(event) => {
+            closeMobile();
+            if (onHome) {
+              event.preventDefault();
+              navigate(localizedPath(lang, "/"), { replace: true });
+              window.scrollTo({ top: 0, behavior: "smooth" });
+            }
+          }} className="flex shrink-0 items-center gap-3 hover:opacity-90 transition-opacity">
             {/* Uploaded wordmark (light/dark) when there is one; else mark/icon + name + tagline. */}
             {brand.logoUrl ? (
               <BrandLogo name={brand.companyName} logoUrl={brand.logoUrl} logoUrlDark={brand.logoUrlDark} imgClassName="h-9" />

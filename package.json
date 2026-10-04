@@ -6,10 +6,11 @@
   "packageManager": "pnpm@10.33.2",
   "scripts": {
     "dev": "vite",
-    "build": "pnpm check:i18n && pnpm check:text && tsc -p tsconfig.app.json --noEmit && vite build && pnpm run seo:prerender && pnpm check:bundle",
+    "build": "pnpm check:i18n && pnpm check:text && tsc -p tsconfig.app.json --noEmit && vite build && pnpm run seo:prerender && pnpm check:social-previews && pnpm check:bundle",
     "check:i18n": "node scripts/check-i18n.mjs",
     "check:bundle": "node scripts/check-bundle.mjs",
     "seo:prerender": "node scripts/prerender.mjs",
+    "check:social-previews": "node scripts/check-social-previews.mjs",
     "typecheck": "tsc -p tsconfig.app.json --noEmit",
     "lint": "eslint .",
     "preview": "vite preview",

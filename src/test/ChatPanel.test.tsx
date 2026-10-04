@@ -3,14 +3,16 @@ import { MemoryRouter } from "react-router-dom";
 import { render, screen, fireEvent, waitFor, cleanup } from "@testing-library/react";
 import { afterEach, expect, it, vi } from "vitest";
 import { t } from "@/lib/i18n";
+import { AssistantProvider, useAssistant } from "@/contexts/AssistantContext";
 import { ChatPanel, type Msg } from "@/components/ChatPanel";
 
+const languageState = vi.hoisted(() => ({ lang: "en" as "en" | "es" }));
 const api = vi.hoisted(() => ({ evaluateDemo: vi.fn(), evaluateDemoElectrical: vi.fn(), createDemoProjectDraft: vi.fn() }));
 vi.mock("@/services/sokolApi", () => ({
   sokolApi: api, BuildingType: { residencial: 1, comercial: 2, industrial: 3 },
   DemoLimitError: class extends Error {}, QuotaError: class extends Error {},
 }));
-vi.mock("@/contexts/LangContext", () => ({ useLang: () => ({ lang: "en", tr: t.en }) }));
+vi.mock("@/contexts/LangContext", () => ({ useLang: () => ({ lang: languageState.lang, tr: t[languageState.lang] }) }));
 vi.mock("@/components/UpgradeModal", () => ({ UpgradeModal: () => null }));
 vi.mock("@/components/assistant/WelcomeState", () => ({
   WelcomeState: ({ onPick }: { onPick: (scenario: unknown) => void }) =>
@@ -22,7 +24,7 @@ vi.mock("@/components/assistant/NeedsInfoForm", () => ({
 }));
 Object.defineProperty(HTMLElement.prototype, "scrollTo", { configurable: true, value: vi.fn() });
 
-afterEach(() => { cleanup(); vi.resetAllMocks(); });
+afterEach(() => { cleanup(); vi.resetAllMocks(); languageState.lang = "en"; });
 
 it("keeps the teaser stage when the agent asks a clarifying question", async () => {
   api.evaluateDemo.mockResolvedValueOnce({ type: "needs_info", data: {
@@ -37,9 +39,10 @@ it("keeps the teaser stage when the agent asks a clarifying question", async () 
   fireEvent.click(await screen.findByText("Answer question"));
   await waitFor(() => expect(api.evaluateDemo).toHaveBeenCalledTimes(2));
   for (const [body] of api.evaluateDemo.mock.calls) {
-    expect(body.context).toEqual({ page: "demo", project: null, demo_step: "teaser" });
+    expect(body.context).toEqual({ page: "demo", project: null, demo_step: "teaser", demo_session_id: expect.any(String) });
     expect(body.area_m2).toBeUndefined();
   }
+  expect(api.evaluateDemo.mock.calls[0][0].context.demo_session_id).toBe(api.evaluateDemo.mock.calls[1][0].context.demo_session_id);
   expect(await screen.findByText("Complete agent teaser")).toBeInTheDocument();
 });
 
@@ -127,4 +130,37 @@ it("keeps the preview and offers retry when draft storage fails", async () => {
   expect(popup.location.replace).not.toHaveBeenCalled();
   expect(screen.getAllByRole("button", { name: t.en.demoCreateAccount }).some((b) => !b.hasAttribute("disabled"))).toBe(true);
   open.mockRestore();
+});
+
+
+it("preserves messages and journey across language and panel remounts", async () => {
+  api.evaluateDemo.mockResolvedValueOnce({ type: "message", data: { message: "Office teaser" } })
+    .mockResolvedValueOnce({ type: "evaluation", data: { matchedRules: [], foundryUsed: true,
+      requirements: ["Review NFPA 10"], reference: ["NFPA 10"], contextCr: [], risk: "medio" } })
+    .mockResolvedValueOnce({ type: "message", data: { message: "Electrical follow-up" } });
+  function Panel() {
+    const { messages, setMessages } = useAssistant();
+    return <ChatPanel demo buildingType={2} usage="office" messages={messages} setMessages={setMessages} />;
+  }
+  function Harness({ variant }: { variant: string }) {
+    return <MemoryRouter><AssistantProvider><Panel key={variant} /></AssistantProvider></MemoryRouter>;
+  }
+  const view = render(<Harness variant="desktop-en" />);
+  fireEvent.click(screen.getByText("Start scenario"));
+  expect(await screen.findByText("Office teaser")).toBeInTheDocument();
+  const journey = api.evaluateDemo.mock.calls[0][0].context.demo_session_id;
+  languageState.lang = "es";
+  view.rerender(<Harness variant="mobile-es" />);
+  expect(screen.getByText("Office teaser")).toBeInTheDocument();
+  fireEvent.click(screen.getByRole("button", { name: t.en.demoSeeEval }));
+  await waitFor(() => expect(api.evaluateDemo).toHaveBeenCalledTimes(2));
+  expect(api.evaluateDemo.mock.calls[1][0].context).toMatchObject({ demo_step: "full_evaluation", demo_session_id: journey });
+  const input = screen.getByPlaceholderText(t.es.askPlaceholder);
+  await waitFor(() => expect(input).not.toBeDisabled());
+  fireEvent.change(input, { target: { value: "¿Cómo se relaciona con NFPA 70?" } });
+  fireEvent.submit(input.closest("form")!);
+  await waitFor(() => expect(api.evaluateDemo).toHaveBeenCalledTimes(3));
+  const followup = api.evaluateDemo.mock.calls[2][0];
+  expect(followup.context.demo_session_id).toBe(journey);
+  expect(followup.conversation.some((turn: { content: string }) => turn.content.includes("Review NFPA 10"))).toBe(true);
 });

@@ -1,3 +1,4 @@
+import type { PlanConfig } from "@/lib/plans";
 /**
  * Sóköl — public demo API (landing).
  *
@@ -98,6 +99,7 @@ export interface EvaluateContext {
   page: "dashboard" | "projects" | "project_detail" | "evaluation" | "demo" | "other";
   project?: Record<string, unknown> | null;
   /** FCR-109: guided-demo step (DEMO MODE only) — teaser | full_evaluation | project. */
+  demo_session_id?: string;
   demo_step?: "teaser" | "full_evaluation" | "project";
 }
 
@@ -158,6 +160,7 @@ export class DemoLimitError extends Error {
  */
 export interface QuotaExceededBody {
   type: "quota_exceeded";
+  unit?: "tokens";
   message: string;
   limit: number;
   current?: number;
@@ -471,6 +474,7 @@ function asDemoLimit(obj: unknown): DemoLimitResponse | null {
 }
 
 export const sokolApi = {
+  getPlans() { return call<PlanConfig[]>("GET", "/plans"); },
   createDemoProjectDraft(body: Record<string, unknown>) {
     return call<{ draftId: string; claimToken: string; expiresAt: string }>("POST", "/demo/project-drafts", body);
   },

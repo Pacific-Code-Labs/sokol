@@ -42,10 +42,7 @@ export function SiteFooter() {
           {/* Brand */}
           <div className="col-span-2">
             <Link to={localizedPath(lang, "/")} className="mb-4 inline-flex items-center gap-2 hover:opacity-80 transition-opacity">
-              <BrandLogo name={brand.companyName} markUrl={brand.markUrl} Icon={brand.LogoIcon} variant="mark" className="h-9 w-9" />
-              <span className="text-lg font-bold tracking-tight">
-                {brand.companyName} <span className="text-primary">{brand.companySuffix}</span>
-              </span>
+              <BrandLogo name={brand.companyName} suffix={brand.companySuffix} logoUrl={brand.logoUrl} logoUrlDark={brand.logoUrlDark} markUrl={brand.markUrl} Icon={brand.LogoIcon} imgClassName="h-9" />
             </Link>
             <p className="max-w-sm text-sm leading-relaxed text-muted-foreground">{footer.description}</p>
           </div>

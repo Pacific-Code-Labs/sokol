@@ -52,6 +52,7 @@ function meta(route, lang) {
 // prerendered page both ranks AND boots the React app. (Read once, up front,
 // BEFORE we overwrite the root index.html with the redirect shell below.)
 const SPA_SHELL = await fs.readFile(path.join(OUT, "index.html"), "utf8");
+const BRAND_LINKS = (SPA_SHELL.match(/<link\b[^>]*rel="(?:icon|apple-touch-icon|manifest)"[^>]*>/gi) ?? []).join("\n    ");
 
 /** Inject per-route SEO tags into the real SPA shell, keeping the app bootable. */
 function injectSeo(shell, { lang, title, description, canonical, route, noindex }) {
@@ -84,7 +85,9 @@ function injectSeo(shell, { lang, title, description, canonical, route, noindex 
     `<meta property="og:description" content="${esc(description)}" />`,
     `<meta property="og:url" content="${canonical}" />`,
     `<meta property="og:image" content="${ogImageFor(lang)}" />`,
+    `<meta property="og:locale" content="${lang === "en" ? "en_US" : "es_CR"}" />`,
     '<meta name="twitter:card" content="summary_large_image" />',
+    `<meta name="twitter:image" content="${ogImageFor(lang)}" />`,
     `<meta name="twitter:title" content="${esc(title)}" />`,
     `<meta name="twitter:description" content="${esc(description)}" />`,
     `<script type="application/ld+json">${JSON.stringify(jsonLd)}</script>`,
@@ -92,7 +95,7 @@ function injectSeo(shell, { lang, title, description, canonical, route, noindex 
 
   let html = shell;
   // <html lang> for this page
-  html = html.replace(/<html[^>]*>/i, `<html lang="${lang}">`);
+  html = html.replace(/<html[^>]*>/i, `<html lang="${lang}" class="dark">`);
   // Replace the shell's <title> (or insert one) + strip any SEO tags it carries,
   // so we don't end up with duplicates after injecting ours.
   if (/<title>[\s\S]*?<\/title>/i.test(html)) {
@@ -151,26 +154,33 @@ const notFound = spaShell.replace(
 );
 await fs.writeFile(path.join(OUT, "404.html"), notFound);
 
-// Root index.html: since ALL routes are language-prefixed (/:lang/...), the bare
-// "/" must land on the default language. Overwrite the SPA shell at the root with
-// a tiny redirect shell to "/<DEFAULT_LANG>" (meta-refresh + canonical + a
-// noscript fallback link). Deep links still hydrate via the per-language
-// prerendered pages + the SPA fallback (404.html); crawlers use the sitemap.
-const rootRedirect = `<!doctype html>
+// Unprefixed public URLs carry Spanish metadata before redirecting. Social
+// crawlers must not need JavaScript or redirect handling to discover the card.
+for (const route of ROUTES) {
+  const target = `/${DEFAULT_LANG}${slugOf(route)}`;
+  const { title, description } = meta(route, DEFAULT_LANG);
+  const redirectShell = `<!doctype html>
 <html lang="${DEFAULT_LANG}">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="refresh" content="0;url=/${DEFAULT_LANG}" />
-    <link rel="canonical" href="${siteUrl}/${DEFAULT_LANG}" />
-    <title>Sóköl</title>
+    ${BRAND_LINKS}
+    <meta name="theme-color" content="#16181D" />
+    <meta http-equiv="refresh" content="0;url=${target}" />
+    <title>${esc(title)}</title>
   </head>
   <body>
-    <noscript><a href="/${DEFAULT_LANG}">Continue</a></noscript>
-    <script>location.replace("/${DEFAULT_LANG}");</script>
+    <noscript><a href="${target}">${esc(title)}</a></noscript>
+    <script>location.replace(${JSON.stringify(target)});</script>
   </body>
 </html>
 `;
-await fs.writeFile(path.join(OUT, "index.html"), rootRedirect);
+  const html = injectSeo(redirectShell, {
+    lang: DEFAULT_LANG, title, description, canonical: `${siteUrl}${target}`, route,
+  });
+  const dir = path.join(OUT, route === "home" ? "" : route);
+  await fs.mkdir(dir, { recursive: true });
+  await fs.writeFile(path.join(dir, "index.html"), html);
+}
 
 console.log(`[prerender] wrote ${written} page(s) + sitemap.xml + noindex 404.html + root redirect shell → ${path.relative(ROOT, OUT)}`);

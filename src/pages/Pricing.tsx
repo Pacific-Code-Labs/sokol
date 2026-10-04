@@ -1,3 +1,5 @@
+import { useQuery } from "@tanstack/react-query";
+import { sokolApi } from "@/services/sokolApi";
 /**
  * Pricing (FCR-028, public, card-free) — the 3-tier plan surface.
  *
@@ -50,7 +52,7 @@ function seatsLabel(seats: number, tr: Dict): string {
 
 function planFeatures(plan: PlanConfig, tr: Dict): string[] {
   return [
-    fill(tr.pricing_feat_evals, { value: quotaLabel(plan.monthlyEvaluateQuota, tr) }),
+    tr.pricing_feat_evals,
     fill(tr.pricing_feat_projects, { value: quotaLabel(plan.maxSavedProjects, tr) }),
     seatsLabel(plan.seats, tr),
   ];
@@ -58,6 +60,7 @@ function planFeatures(plan: PlanConfig, tr: Dict): string[] {
 
 export default function Pricing() {
   const { lang, tr } = useLang();
+  const plans = useQuery({ queryKey: ["plans"], queryFn: () => sokolApi.getPlans(), staleTime: 60_000 });
 
   return (
     <div className="flex min-h-[calc(100dvh-4rem)] flex-col bg-background">
@@ -69,7 +72,7 @@ export default function Pricing() {
 
         <div className="mx-auto mt-10 grid max-w-5xl gap-6 md:grid-cols-3">
           {PLAN_ORDER.map((t) => {
-            const plan = PLANS[t];
+            const plan = plans.data?.find((p) => p.tier === t) ?? PLANS[t];
             const comingSoon = !plan.selfServe;
             return (
               <Card
@@ -78,10 +81,10 @@ export default function Pricing() {
               >
                 <CardHeader className="space-y-2">
                   <div className="flex items-center justify-between gap-2">
-                    <CardTitle>{tr[NAME_KEY[t]]}</CardTitle>
+                    <CardTitle>{plan[`name_${lang}`] ?? tr[NAME_KEY[t]]}</CardTitle>
                     {comingSoon && <Badge variant="info">{tr.pricing_coming_soon}</Badge>}
                   </div>
-                  <p className="text-sm text-muted-foreground">{tr[TAGLINE_KEY[t]]}</p>
+                  <p className="text-sm text-muted-foreground">{plan[`description_${lang}`] ?? tr[TAGLINE_KEY[t]]}</p>
                 </CardHeader>
 
                 <CardBody className="flex-1">

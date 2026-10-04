@@ -33,7 +33,7 @@ function LegacyRedirect() {
   const { rest } = stripLangPrefix(location.pathname);
   const first = rest.split("/")[1] ?? "";
   if (LEGACY_APP_PATHS.includes(first)) return <AppRedirect />;
-  return <Navigate to={localizedPath(persistedLang(), rest) + location.search + location.hash} replace />;
+  return <Navigate to={localizedPath(DEFAULT_LANG, rest) + location.search + location.hash} replace />;
 }
 
 /** /:lang/:segment/* — app paths go to the app, unknown ones 404. */

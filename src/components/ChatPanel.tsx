@@ -10,6 +10,7 @@ import { sokolApi, BuildingType, DemoLimitError, QuotaError, type ConversationTu
 import { UpgradeModal } from "@/components/UpgradeModal";
 import { demoProjectSnapshot, demoRegistrationUrl } from "@/lib/demoProjectDraft";
 import { appHref, newTab } from "@/lib/links";
+import { useAssistantRuntimeRef, useAssistantChatState } from "@/contexts/AssistantContext";
 import type { PageContext } from "@/contexts/AssistantContext";
 import {
   normalizeAssistantResponse,
@@ -131,7 +132,7 @@ function toConversation(messages: Msg[]): ConversationTurn[] {
         m.type !== "needs_info" &&
         (m.text?.trim()?.length ?? 0) > 0,
     )
-    .map<ConversationTurn>((m) => ({ role: m.role, content: m.text }))
+    .map<ConversationTurn>((m) => ({ role: m.role, content: m.role === "assistant" && m.payload && ["evaluation", "project", "electrical"].includes(m.type ?? "") ? JSON.stringify(m.payload, (key, value) => key === "matchedRules" && Array.isArray(value) ? value.map((r) => ({ id: r.id, standard: r.standard, title: r.title })) : value) : m.text }))
     .slice(-MAX_CONVERSATION_TURNS);
 }
 
@@ -159,36 +160,36 @@ export function ChatPanel({ buildingType, usage, areaM2, floors, occupants, ceil
   // FCR-118: capabilities are resolved per variant (demo vs internal) so each
   // assistant's available functions are controlled from one declarative place.
   const caps = getAssistantCapabilities(demo);
-  const [input, setInput] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+  const { input, setInput, isLoading, setIsLoading } = useAssistantChatState();
   // FCR-026: the authenticated /evaluate quota gate returns 402/429 → QuotaError.
   // The public demo path keeps using DemoLimitError; this is the signed-in path.
   const [quota, setQuota] = useState<QuotaError | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
 
   // FCR-100 guided-demo state (refs avoid re-render churn / setState races).
-  const demoNextRef = useRef<PromptKind | null>(null);
+  const demoNextRef = useAssistantRuntimeRef<PromptKind | null>("demoNextRef", null);
   // Clarification answers belong to the same request stage and scenario.
-  const activeAskOptionsRef = useRef<AskOptions>({});
-  const activeScenarioRef = useRef<DemoScenario | null>(null);
-  const activeQueryRef = useRef<string>("");
-  const demoEndedRef = useRef<boolean>(false);
-  const projectReofferedRef = useRef<boolean>(false); // FCR-115: re-offer the project once on decline
-  const projectCreatedRef = useRef<boolean>(false); // FCR-116: a project preview already shown → stop offering "create project", go to sign-up
+  const activeAskOptionsRef = useAssistantRuntimeRef<AskOptions>("activeAskOptionsRef", {});
+  const activeScenarioRef = useAssistantRuntimeRef<DemoScenario | null>("activeScenarioRef", null);
+  const activeQueryRef = useAssistantRuntimeRef<string>("activeQueryRef", "");
+  const demoEndedRef = useAssistantRuntimeRef<boolean>("demoEndedRef", false);
+  const projectReofferedRef = useAssistantRuntimeRef<boolean>("projectReofferedRef", false); // FCR-115: re-offer the project once on decline
+  const projectCreatedRef = useAssistantRuntimeRef<boolean>("projectCreatedRef", false); // FCR-116: a project preview already shown → stop offering "create project", go to sign-up
   const restoredProject = [...messages].reverse().find((m) => m.type === "project")?.payload as ProjectCreatedData | undefined;
   const restoredElectrical = [...messages].reverse().find((m) => m.type === "electrical")?.payload;
-  const previewRef = useRef<ProjectPreview | null>(restoredProject?.projectId == null ? restoredProject?.project ?? null : null);
-  const electricalSnapshotRef = useRef<Record<string, unknown> | null>(restoredElectrical ? { result: restoredElectrical } : null);
-  const handoffRef = useRef<string | null>(null);
-  const savingDraftRef = useRef(false);
+  const previewRef = useAssistantRuntimeRef<ProjectPreview | null>("previewRef", restoredProject?.projectId == null ? restoredProject?.project ?? null : null);
+  const electricalSnapshotRef = useAssistantRuntimeRef<Record<string, unknown> | null>("electricalSnapshotRef", restoredElectrical ? { result: restoredElectrical } : null);
+  const handoffRef = useAssistantRuntimeRef<string | null>("handoffRef", null);
+  const demoSessionRef = useAssistantRuntimeRef<string | null>("demoSessionRef", null);
+  const savingDraftRef = useAssistantRuntimeRef("savingDraftRef", false);
   // FCR-114: a conversational, one-question-at-a-time flow (intake + agent needs_info).
-  const questionFlowRef = useRef<{
+  const questionFlowRef = useAssistantRuntimeRef<{
     qs: NeedsInfoQuestion[];
     idx: number;
     collected: string[];
     submitLabel?: string;
     onComplete: (summary: string) => void;
-  } | null>(null);
+  } | null>("questionFlowRef", null);
 
   useEffect(() => {
     // Follow the conversation; the empty welcome state stays at the top.
@@ -374,6 +375,7 @@ export function ChatPanel({ buildingType, usage, areaM2, floors, occupants, ceil
     // /demo/evaluate; the dashboard assistant uses the authenticated /evaluate.
     // FCR-044: send REAL selected values (or omit). A tapped scenario's overrides
     // win; a teaser step omits building params so the agent gives a short answer.
+    if (demo && !demoSessionRef.current) demoSessionRef.current = crypto.randomUUID();
     const requestBody = {
       building_type: teaser ? undefined : (overrides?.building_type ?? buildingType ?? undefined),
       usage: teaser ? undefined : (overrides?.usage ?? usage ?? undefined),
@@ -386,7 +388,7 @@ export function ChatPanel({ buildingType, usage, areaM2, floors, occupants, ceil
       language: lang,
       conversation,
       context: demo
-        ? { page: "demo" as const, project: null, demo_step: demoStep }
+        ? { page: "demo" as const, project: null, demo_step: demoStep, demo_session_id: demoSessionRef.current ?? undefined }
         : pageContext
         ? { page: pageContext.page, project: pageContext.payload ?? null }
         : undefined,
@@ -425,6 +427,7 @@ export function ChatPanel({ buildingType, usage, areaM2, floors, occupants, ceil
 
   /** Start guided-demo step 1 (teaser). */
   const startDemoStep1 = (scenario: DemoScenario | null, query: string) => {
+    demoSessionRef.current = crypto.randomUUID();
     demoEndedRef.current = false;
     projectReofferedRef.current = false;
     projectCreatedRef.current = false;
@@ -454,6 +457,9 @@ export function ChatPanel({ buildingType, usage, areaM2, floors, occupants, ceil
           demoNext: "see_electrical",
           demoStep: "project",
         });
+      } else if (demoSessionRef.current) {
+        // A typed follow-up belongs to the current evaluation, including after preview.
+        ask(text, { overrides: activeScenarioRef.current?.params, demoStep: "full_evaluation" });
       } else {
         startDemoStep1(null, text);
       }
@@ -714,7 +720,7 @@ export function ChatPanel({ buildingType, usage, areaM2, floors, occupants, ceil
         <div className="flex items-center gap-1">
           {messages.length > 0 && (
             <button
-              onClick={() => setMessages([])}
+              onClick={() => { setMessages([]); activeScenarioRef.current = null; activeQueryRef.current = ""; questionFlowRef.current = null; activeAskOptionsRef.current = {}; demoNextRef.current = null; demoSessionRef.current = null; projectCreatedRef.current = false; demoEndedRef.current = false; previewRef.current = null; electricalSnapshotRef.current = null; handoffRef.current = null; projectReofferedRef.current = false; }}
               title={tr.chat_clear}
               className="rounded p-1 text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground"
             >
