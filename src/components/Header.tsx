@@ -42,8 +42,10 @@ export function Header({ actionsRef }: HeaderProps) {
   const { rest } = stripLangPrefix(pathname);
   const onHome = rest === "/";
   const onLanding = onHome || rest === "/features" || rest === "/how";
-  const visibleSection = useLandingSection(onLanding, pathname);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const visibleSection = useLandingSection(onLanding, pathname, mobileOpen);
+  const [mobileSection, setMobileSection] = useState<typeof visibleSection>(null);
+  const activeSection = mobileOpen ? mobileSection : visibleSection;
 
   const chrome = tChrome(lang);
   const brand = getBrandingVM(lang);
@@ -53,7 +55,7 @@ export function Header({ actionsRef }: HeaderProps) {
 
   const hrefFor = (item: NavItem) =>
     localizedPath(lang, item.section ? `/${item.section}` : item.path);
-  const isActive = (item: NavItem) => item.section ? onLanding && visibleSection === item.section : !!item.path && rest.startsWith(item.path);
+  const isActive = (item: NavItem) => item.section ? onLanding && activeSection === item.section : !!item.path && rest.startsWith(item.path);
 
   // Scroll highlights follow the viewport; repeat clicks on the current path still scroll.
   const onNavClick = (item: NavItem) => (e: React.MouseEvent) => {
@@ -137,7 +139,10 @@ export function Header({ actionsRef }: HeaderProps) {
           <LanguageToggle />
 
           {/* Mobile / tablet menu */}
-          <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
+          <Sheet open={mobileOpen} onOpenChange={(open) => {
+            if (open) setMobileSection(visibleSection);
+            setMobileOpen(open);
+          }}>
             <SheetTrigger asChild>
               <Button variant="outline" size="md" className="h-10 w-10 px-0 lg:hidden" aria-label={chrome.nav.openMenu}>
                 <Menu className="h-4 w-4" />

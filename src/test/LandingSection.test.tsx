@@ -12,8 +12,8 @@ it("tracks both scroll directions, clears outside sections and ignores non-landi
     const height = this.tagName === "HEADER" ? 64 : 700;
     return { top, bottom: top + height, left: 0, right: 100, width: 100, height, x: 0, y: top, toJSON() {} };
   });
-  function Probe({ enabled = true }: { enabled?: boolean }) {
-    const section = useLandingSection(enabled, enabled ? "/en/features" : "/en/demo");
+  function Probe({ enabled = true, paused = false }: { enabled?: boolean; paused?: boolean }) {
+    const section = useLandingSection(enabled, enabled ? "/en/features" : "/en/demo", paused);
     return <><header /><section id="features" /><section id="how" /><output>{section ?? "none"}</output></>;
   }
   const view = render(<Probe />);
@@ -23,7 +23,11 @@ it("tracks both scroll directions, clears outside sections and ignores non-landi
   expect(screen.getByRole("status")).toHaveTextContent("none");
   scrollTo(500);
   expect(screen.getByRole("status")).toHaveTextContent("features");
+  view.rerender(<Probe paused />);
   scrollTo(1200);
+  expect(screen.getByRole("status")).toHaveTextContent("features");
+  view.rerender(<Probe />);
+  tick();
   expect(screen.getByRole("status")).toHaveTextContent("how");
   scrollTo(500);
   expect(screen.getByRole("status")).toHaveTextContent("features");

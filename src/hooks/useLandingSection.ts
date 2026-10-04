@@ -3,13 +3,15 @@ import { useEffect, useState } from "react";
 type LandingSection = "features" | "how";
 
 /** Track the section at the reading line without navigating or moving the page. */
-export function useLandingSection(enabled: boolean, pathname: string) {
+export function useLandingSection(enabled: boolean, pathname: string, paused = false) {
   const [section, setSection] = useState<LandingSection | null>(null);
   useEffect(() => {
     if (!enabled) {
       setSection(null);
       return;
     }
+    // The modal menu temporarily locks/repositions document scrolling.
+    if (paused) return;
     let frame = 0;
     const update = () => {
       frame = 0;
@@ -30,6 +32,6 @@ export function useLandingSection(enabled: boolean, pathname: string) {
       window.removeEventListener("scroll", schedule);
       window.removeEventListener("resize", schedule);
     };
-  }, [enabled, pathname]);
+  }, [enabled, pathname, paused]);
   return section;
 }
