@@ -6,6 +6,7 @@ import { BuildingSelector } from "@/components/BuildingSelector";
 import { CategoryCard } from "@/components/CategoryCard";
 import { ChatPanel } from "@/components/ChatPanel";
 import { AssistantDrawer } from "@/components/assistant/AssistantDrawer";
+import { AssistantAvatar } from "@/components/assistant/AssistantAvatar";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@pacific-code-labs/sokol-design-system";
 import { useLang } from "@/contexts/LangContext";
@@ -15,7 +16,7 @@ import { type DemoScenarioParams } from "@/lib/demoScenarios";
 import { cn } from "@/lib/utils";
 import { tChrome, fmt } from "@/lib/chrome-i18n";
 import { resolveSeo, useHeadTags } from "@/lib/seo";
-import { Printer, ShieldAlert, ListChecks, AlertTriangle, ChevronLeft, ChevronRight, Sparkles } from "lucide-react";
+import { Printer, ShieldAlert, ListChecks, AlertTriangle, ChevronLeft, ChevronRight } from "lucide-react";
 
 const PAGE_SIZE = 20;
 
@@ -343,7 +344,7 @@ const Index = ({ embedded = false }: { embedded?: boolean } = {}) => {
           onClick={() => setChatOpen(true)}
           aria-label={chrome.demo.assistant}
         >
-          <Sparkles className="h-6 w-6" aria-hidden="true" />
+          <AssistantAvatar className="h-10 w-10 brightness-0 invert" />
         </Button>,
         document.body,
       )}

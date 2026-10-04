@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-04T00:39:25.745Z",
+  "generatedAt": "2026-10-04T14:27:31.537Z",
   "counts": {
     "lib": 26,
     "component": 31,
@@ -1327,6 +1327,11 @@
     },
     {
       "from": "pages/Index",
+      "to": "components/assistant/AssistantAvatar",
+      "kind": "imports"
+    },
+    {
+      "from": "pages/Index",
       "to": "components/assistant/AssistantDrawer",
       "kind": "imports"
     },
@@ -1438,6 +1443,11 @@
     {
       "from": "pages/NotFound",
       "to": "lib/seo",
+      "kind": "imports"
+    },
+    {
+      "from": "pages/NotFound",
+      "to": "services/branding.service",
       "kind": "imports"
     },
     {

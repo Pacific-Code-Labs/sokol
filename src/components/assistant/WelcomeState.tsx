@@ -39,7 +39,10 @@ export function WelcomeState({ onPick }: Props) {
             <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
               <s.icon className="h-4 w-4" />
             </span>
-            <span className="text-xs font-medium leading-tight">{s.label}</span>
+            <span className="min-w-0 space-y-1">
+              <span className="block text-xs font-semibold leading-snug">{s.label}</span>
+              <span className="block text-xs leading-relaxed text-muted-foreground">{s.query}</span>
+            </span>
             <ArrowRight className="ml-auto h-3.5 w-3.5 shrink-0 text-muted-foreground opacity-0 transition-all group-hover:translate-x-0.5 group-hover:opacity-100" />
           </button>
         ))}
