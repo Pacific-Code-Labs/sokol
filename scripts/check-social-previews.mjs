@@ -15,7 +15,7 @@ for (const prefix of ["", "es", "en"]) {
   const image = new URL(ref, `${site}/`).href;
   for (const route of routes) {
     const parts = [prefix, route].filter(Boolean);
-    const html = await readFile(new URL(`dist/${parts.length ? parts.join("/") + "/" : ""}index.html`, root), "utf8");
+    const html = await readFile(new URL(`dist/${parts.length ? parts.join("/") + ".html" : "index.html"}`, root), "utf8");
     const label = `/${parts.join("/")}`;
     for (const [attribute, key] of [["property", "og:image"], ["name", "twitter:image"]]) {
       const matches = [...html.matchAll(new RegExp(`<meta ${attribute}="${key}" content="([^"]*)"`, "g"))];

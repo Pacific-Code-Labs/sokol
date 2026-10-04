@@ -1,7 +1,7 @@
 // Post-build static prerender (landing-dxp-builder seo-deploy.md, Layer 1).
 //
 // Runs AFTER `vite build` (wired into the `build` script). For every
-// language × route it writes dist/<lang>/<slug>/index.html with that route's
+// language × route it writes dist/<lang>/<slug>.html with that route's
 // <title>, description, canonical, hreflang alternates (one per language +
 // x-default), OG/Twitter tags, <html lang>, and JSON-LD (WebPage +
 // BreadcrumbList). Also writes sitemap.xml (with hreflang alternates), a root
@@ -120,9 +120,10 @@ for (const lang of LANGS) {
     const { title, description } = meta(route, lang);
     const canonical = `${siteUrl}/${lang}${slugOf(route)}`;
     const html = injectSeo(SPA_SHELL, { lang, title, description, canonical, route });
-    const dir = path.join(OUT, lang, route === "home" ? "" : route);
-    await fs.mkdir(dir, { recursive: true });
-    await fs.writeFile(path.join(dir, "index.html"), html);
+    // Flat HTML pages let Pages resolve slash-free URLs directly.
+    const file = path.join(OUT, `${lang}${slugOf(route)}.html`);
+    await fs.mkdir(path.dirname(file), { recursive: true });
+    await fs.writeFile(file, html);
     written++;
   }
 }
@@ -178,9 +179,8 @@ for (const route of ROUTES) {
   const html = injectSeo(redirectShell, {
     lang: DEFAULT_LANG, title, description, canonical: `${siteUrl}${target}`, route,
   });
-  const dir = path.join(OUT, route === "home" ? "" : route);
-  await fs.mkdir(dir, { recursive: true });
-  await fs.writeFile(path.join(dir, "index.html"), html);
+  const file = path.join(OUT, route === "home" ? "index.html" : `${route}.html`);
+  await fs.writeFile(file, html);
 }
 
 console.log(`[prerender] wrote ${written} page(s) + sitemap.xml + noindex 404.html + root redirect shell → ${path.relative(ROOT, OUT)}`);
