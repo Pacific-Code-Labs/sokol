@@ -4,6 +4,7 @@ import App from "./App.tsx";
 // site's index.css (the live light/dark values of the same token names) wins the cascade.
 import "@pacific-code-labs/sokol-design-system/styles";
 import "./index.css";
+import "./styles/workspace.css";
 // FCR-080: apply the active DXP brand theme (themes.json → DS theme engine) + favicon.
 import { initBrand } from "./lib/brand-theme";
 import { initContent, refreshContent } from "./repositories/content.repository";

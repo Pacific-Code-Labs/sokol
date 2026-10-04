@@ -132,25 +132,25 @@ const Index = ({ embedded = false }: { embedded?: boolean } = {}) => {
 
   return (
     /* Outer: natural scroll on mobile, viewport-locked on desktop */
-    <div className="flex flex-col scanline" style={{ minHeight: embedded ? "auto" : "calc(100dvh - 4rem)" }}>
+    <div className={cn("premium-demo flex flex-col", embedded && "premium-demo--embedded")} style={{ minHeight: embedded ? "auto" : "calc(100dvh - 4rem)" }}>
 
 
       {/*
         Mobile:  flex-col, everything stacks, page scrolls normally.
         Desktop: flex-row, left col scrolls independently, right col (chat) is pinned.
       */}
-      <main className={cn("container flex-1 px-4 flex flex-col gap-4", embedded ? "py-2" : "py-4 lg:max-w-[1600px]")}>
-        <div className="flex flex-col gap-4 lg:flex-row lg:items-start">
+      <main className={cn("container flex-1 px-4 flex flex-col gap-4", embedded ? "py-2" : "py-8 lg:max-w-[1440px]")}>
+        <div className="demo-workspace-grid flex flex-col gap-6 lg:flex-row lg:items-start">
 
           {/* ── LEFT COLUMN ── */}
           <div className="flex min-w-0 flex-col gap-4 lg:flex-1">
 
             {/* Title + badge */}
-            <section className={cn(embedded ? "space-y-1" : "space-y-2")}>
+            <section className={cn(embedded ? "space-y-1" : "demo-intro space-y-3")}>
               <div className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-primary">
                 <ShieldAlert className="h-3.5 w-3.5" /> {chrome.demo.badge}
               </div>
-              <h1 className={cn("font-bold leading-tight", embedded ? "text-lg sm:text-xl" : "text-2xl sm:text-3xl")}>
+              <h1 className={cn("font-bold leading-tight", embedded ? "text-lg sm:text-xl" : "text-3xl sm:text-4xl")}>
                 {chrome.demo.heroTitlePrefix}
                 <span className="text-primary">{chrome.demo.heroTitleHighlight}</span>
                 {chrome.demo.heroTitleSuffix}
@@ -310,7 +310,7 @@ const Index = ({ embedded = false }: { embedded?: boolean } = {}) => {
           {!embedded && (
             <div
               className={cn(
-                "no-print hidden lg:flex lg:w-[40%] lg:min-w-0 lg:shrink-0 lg:flex-col lg:sticky lg:top-[4.5rem]"
+                "demo-assistant-column no-print hidden lg:flex lg:w-[40%] lg:min-w-0 lg:shrink-0 lg:flex-col lg:sticky lg:top-[4.5rem]"
               )}
               style={{ height: "calc(100dvh - 5.5rem)" }}
             >

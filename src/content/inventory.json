@@ -1,8 +1,8 @@
 {
-  "generatedAt": "2026-10-04T18:15:51.136Z",
+  "generatedAt": "2026-10-04T18:58:09.354Z",
   "counts": {
-    "lib": 29,
-    "component": 37,
+    "lib": 30,
+    "component": 38,
     "content": 14,
     "context": 3,
     "page": 4,
@@ -170,6 +170,13 @@
       "type": "component",
       "group": "component",
       "path": "src/components/landing/BuildingBlueprint.tsx"
+    },
+    {
+      "id": "components/landing/FeatureVisual",
+      "label": "FeatureVisual",
+      "type": "component",
+      "group": "component",
+      "path": "src/components/landing/FeatureVisual.tsx"
     },
     {
       "id": "components/landing/Reveal",
@@ -597,6 +604,13 @@
       "type": "lib",
       "group": "lib",
       "path": "src/styles/landing.css"
+    },
+    {
+      "id": "styles/workspace.css",
+      "label": "workspace.css",
+      "type": "lib",
+      "group": "lib",
+      "path": "src/styles/workspace.css"
     },
     {
       "id": "test/ChatPanel.test",
@@ -1110,11 +1124,6 @@
     },
     {
       "from": "components/landing/Workflow",
-      "to": "components/ui/button",
-      "kind": "imports"
-    },
-    {
-      "from": "components/landing/Workflow",
       "to": "services/landing.service",
       "kind": "imports"
     },
@@ -1414,6 +1423,11 @@
       "kind": "imports"
     },
     {
+      "from": "main",
+      "to": "styles/workspace.css",
+      "kind": "imports"
+    },
+    {
       "from": "pages/Index",
       "to": "components/assistant/AssistantAvatar",
       "kind": "imports"
@@ -1491,6 +1505,11 @@
     {
       "from": "pages/Landing",
       "to": "components/landing/BuildingBlueprint",
+      "kind": "imports"
+    },
+    {
+      "from": "pages/Landing",
+      "to": "components/landing/FeatureVisual",
       "kind": "imports"
     },
     {
