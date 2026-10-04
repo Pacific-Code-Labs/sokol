@@ -76,5 +76,9 @@ export const getBranding = (): BrandingContent => {
 /** Bundled sharing cards remain available when older published branding has empty fields. */
 export const getBundledBranding = (): BrandingContent => branding;
 export const getThemes = (): ThemesContent => doc("themes", themes);
-export const getSeo = (): SeoContent => doc("seo", seo);
+export const getSeo = (): SeoContent => {
+  const current = doc("seo", seo);
+  return { ...seo, ...current, pages: { ...seo.pages, ...current.pages } };
+};
+export const getBundledSeo = (): SeoContent => seo;
 export const getMedia = (): MediaContent => doc("media", media);

@@ -40,6 +40,26 @@
         "title": "Plans & pricing — Sóköl",
         "description": "Start free with Sóköl: NFPA and electrical-regulation assistance with token-metered AI usage. Paid plans coming soon."
       }
+    },
+    "features": {
+      "es": {
+        "title": "Características — Sóköl",
+        "description": "Explore las herramientas de Sóköl para evaluar proyectos: análisis de requisitos, referencias NFPA y contexto de Costa Rica."
+      },
+      "en": {
+        "title": "Features — Sóköl",
+        "description": "Explore Sóköl project evaluation tools: requirement analysis, NFPA references and Costa Rica context."
+      }
+    },
+    "how": {
+      "es": {
+        "title": "Cómo funciona — Sóköl",
+        "description": "Explore el proceso de Sóköl paso a paso: ingrese los datos del edificio, analice su proyecto y obtenga los requisitos aplicables."
+      },
+      "en": {
+        "title": "How it works — Sóköl",
+        "description": "Explore the Sóköl workflow: enter building data, analyze your project and get applicable requirements."
+      }
     }
   }
 }

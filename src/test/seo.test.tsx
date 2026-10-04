@@ -45,3 +45,10 @@ it("updates OG and Twitter together when navigating between languages", () => {
     expect(document.querySelectorAll('meta[property="og:image"]')).toHaveLength(1);
   }
 });
+
+it.each(["how", "features"])("resolves the %s path and its language alternates", route => {
+  for (const lang of ["es", "en"] as const) {
+    expect(resolveSeo(route, lang).canonical).toBe(`https://sokol.jcampos.dev/${lang}/${route}`);
+    expect(resolveSeo(route, lang).title).toBe(seo.pages[route as "how" | "features"][lang].title);
+  }
+});

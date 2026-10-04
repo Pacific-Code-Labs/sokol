@@ -60,6 +60,8 @@ const App = () => (
             {/* Language-prefixed pages (FCR-106): the URL drives i18n (LangLayout). */}
             <Route path="/:lang" element={<LangLayout />}>
               <Route index element={<Landing />} />
+              <Route path="features" element={<Landing section="features" />} />
+              <Route path="how" element={<Landing section="how" />} />
               <Route path="demo" element={<Suspense fallback={<DemoSkeleton />}><Index /></Suspense>} />
               <Route path="pricing" element={<Pricing />} />
               <Route path=":segment/*" element={<LangChild />} />

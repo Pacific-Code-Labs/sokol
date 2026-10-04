@@ -7,7 +7,7 @@ const root = new URL("../", import.meta.url);
 const seo = JSON.parse(await readFile(new URL("src/content/seo.json", root), "utf8"));
 const branding = JSON.parse(await readFile(new URL("src/content/branding.json", root), "utf8"));
 const site = seo.siteUrl.replace(/\/$/, "");
-const routes = ["", "demo", "pricing"];
+const routes = ["", "demo", "pricing", "features", "how"];
 let checked = 0;
 for (const prefix of ["", "es", "en"]) {
   const lang = prefix || "es";

@@ -12,7 +12,9 @@
     "openMenu": "Abrir menú",
     "themeToLight": "Cambiar a modo claro",
     "themeToDark": "Cambiar a modo oscuro",
-    "languageToggle": "Idioma actual: {current}. Cambiar a {next}."
+    "languageToggle": "Idioma actual: {current}. Cambiar a {next}.",
+    "previousStep": "Anterior",
+    "nextStep": "Siguiente"
   },
   "demo": {
     "assistant": "Asistente",

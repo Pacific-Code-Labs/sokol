@@ -49,25 +49,21 @@ export function Header({ actionsRef }: HeaderProps) {
 
 
   const hrefFor = (item: NavItem) =>
-    item.section ? `${localizedPath(lang, "/")}#${item.section}` : localizedPath(lang, item.path);
-  const isActive = (item: NavItem) => !!item.path && rest.startsWith(item.path);
+    localizedPath(lang, item.section ? `/${item.section}` : item.path);
+  const isActive = (item: NavItem) => item.section ? rest === `/${item.section}` : !!item.path && rest.startsWith(item.path);
 
-  // On the home page a section link just scrolls; elsewhere the Landing page scrolls to the hash on load.
-  // The link of the page you're on scrolls back to its top (a new page starts there anyway).
+  // Section routes preserve clean paths; selecting the active section scrolls to it again.
   const onNavClick = (item: NavItem) => (e: React.MouseEvent) => {
     closeMobile();
-    if (item.section && onHome) {
+    if (isActive(item)) {
       e.preventDefault();
-      document.getElementById(item.section)?.scrollIntoView({ behavior: "smooth" });
-      window.history.replaceState(null, "", `#${item.section}`);
-    } else if (isActive(item)) {
-      e.preventDefault();
-      window.scrollTo({ top: 0, behavior: "smooth" });
+      if (item.section) document.getElementById(item.section)?.scrollIntoView({ behavior: "smooth" });
+      else window.scrollTo({ top: 0, behavior: "smooth" });
     }
   };
 
   return (
-    <header className={cn(onHome && "premium-header", "sticky top-0 z-30 border-b border-border bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60 no-print")}>
+    <header className={cn((onHome || rest === "/how" || rest === "/features") && "premium-header", "sticky top-0 z-30 border-b border-border bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60 no-print")}>
       <div className="container flex h-16 items-center justify-between gap-4">
         <div className="flex min-w-0 items-center gap-8">
           <Link to={localizedPath(lang, "/")} onClick={(event) => {

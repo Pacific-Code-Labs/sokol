@@ -1,7 +1,7 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { BrandLogo } from "@pacific-code-labs/sokol-design-system";
 import { useLang } from "@/contexts/LangContext";
-import { localizedPath, stripLangPrefix } from "@/lib/paths";
+import { localizedPath } from "@/lib/paths";
 import { appHref, newTab } from "@/lib/links";
 import { getBrandingVM } from "@/services/branding.service";
 import { getFooterVM } from "@/services/landing.service";
@@ -14,25 +14,10 @@ const linkCls = "hover:text-primary transition-colors";
  */
 export function SiteFooter() {
   const { lang } = useLang();
-  const { pathname } = useLocation();
   const brand = getBrandingVM(lang);
   const footer = getFooterVM(lang);
-  const onHome = stripLangPrefix(pathname).rest === "/";
-
-  // Home sections scroll in place on the home page; elsewhere Landing scrolls to the hash on load.
   const sectionLink = (id: string, label: string) => (
-    <Link
-      to={`${localizedPath(lang, "/")}#${id}`}
-      className={linkCls}
-      onClick={(e) => {
-        if (!onHome) return;
-        e.preventDefault();
-        document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
-        window.history.replaceState(null, "", `#${id}`);
-      }}
-    >
-      {label}
-    </Link>
+    <Link to={localizedPath(lang, `/${id}`)} className={linkCls}>{label}</Link>
   );
 
   return (

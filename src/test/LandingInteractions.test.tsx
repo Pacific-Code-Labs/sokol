@@ -3,27 +3,30 @@ import { afterEach, expect, it, vi } from "vitest";
 import { MemoryRouter, useLocation } from "react-router-dom";
 import { Workflow } from "@/components/landing/Workflow";
 import { LanguageToggle } from "@/components/LanguageToggle";
+import type { LucideIcon } from "lucide-react";
+vi.mock("@/components/landing/AnimatedIcon", () => ({ AnimatedIcon: ({ Icon }: { Icon: LucideIcon }) => <Icon aria-hidden="true" /> }));
 import { LangProvider } from "@/contexts/LangContext";
 import { getHeroVM, getHowItWorksVM } from "@/services/landing.service";
 
 afterEach(() => { cleanup(); localStorage.clear(); vi.useRealTimers(); });
 
-it("selects workflow steps with pointer and keyboard, keeping the panel associated with its selected tab", () => {
+it("navigates workflow steps inside the card and disables the endpoints", () => {
   const cards = getHowItWorksVM("en").cards;
-  render(<MemoryRouter><Workflow cards={cards} preview={getHeroVM("en").preview} demoHref="/en/demo" cta="Try the demo" /></MemoryRouter>);
-  const tabs = screen.getAllByRole("tab");
-  fireEvent.click(tabs[1]);
-  expect(tabs[1]).toHaveAttribute("aria-selected", "true");
-  expect(within(screen.getByRole("tabpanel")).getByRole("heading")).toHaveTextContent(cards[1].title);
-  fireEvent.keyDown(tabs[1], { key: "ArrowDown" });
-  expect(tabs[2]).toHaveFocus();
-  expect(tabs[2]).toHaveAttribute("aria-selected", "true");
-  expect(screen.getByRole("tabpanel")).toHaveAttribute("aria-labelledby", tabs[2].id);
-  fireEvent.keyDown(tabs[2], { key: "ArrowDown" });
-  expect(tabs[0]).toHaveFocus();
-  fireEvent.keyDown(tabs[0], { key: "End" });
-  expect(tabs[2]).toHaveFocus();
-  expect(within(screen.getByRole("tabpanel")).getByRole("link")).toHaveAttribute("href", "/en/demo");
+  render(<MemoryRouter><Workflow cards={cards} preview={getHeroVM("en").preview} demoHref="/en/demo" cta="Try the demo" previousLabel="Previous" nextLabel="Next" /></MemoryRouter>);
+  const region = screen.getByRole("region", { name: "Explore the process" });
+  const previous = within(region).getByRole("button", { name: "Previous" });
+  const next = within(region).getByRole("button", { name: "Next" });
+  expect(previous).toBeDisabled();
+  expect(screen.queryByRole("tablist")).not.toBeInTheDocument();
+  fireEvent.click(next);
+  expect(within(region).getByRole("heading")).toHaveTextContent(cards[1].title);
+  expect(previous).toBeEnabled();
+  fireEvent.click(next);
+  expect(within(region).getByRole("heading")).toHaveTextContent(cards[2].title);
+  expect(next).toBeDisabled();
+  fireEvent.click(previous);
+  expect(within(region).getByRole("heading")).toHaveTextContent(cards[1].title);
+  expect(within(region).getByRole("link")).toHaveAttribute("href", "/en/demo");
 });
 
 it.each(["es", "en"] as const)("shows the current %s flag and preserves the page, search and section when switching", lang => {

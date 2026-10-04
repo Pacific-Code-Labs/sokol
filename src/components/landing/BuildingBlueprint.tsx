@@ -1,5 +1,8 @@
+import { m, useReducedMotion } from "motion/react";
+
 /** Decorative architectural drawing. All meaningful copy lives outside the SVG. */
 export function BuildingBlueprint({ compact = false }: { compact?: boolean }) {
+  const reduced = useReducedMotion();
   return (
     <svg viewBox="0 0 600 520" fill="none" aria-hidden="true" className={`building-blueprint${compact ? " building-blueprint--compact" : ""}`}>
       <g className="blueprint-ground" stroke="currentColor" strokeWidth="0.7">
@@ -19,14 +22,14 @@ export function BuildingBlueprint({ compact = false }: { compact?: boolean }) {
         <path d="M203 177 330 114 436 167 310 230Z" strokeDasharray="4 5" />
         <path d="M330 100V70M170 180l-28-14M470 170l28-14" strokeDasharray="3 5" />
       </g>
-      <g className="blueprint-system" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <m.g initial={false} whileInView={reduced ? undefined : { opacity: [0.65, 1, 0.65] }} transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }} className="blueprint-system" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
         <path d="M240 365V215l90-45 75 37v136" />
         <path d="M240 260l70 35 95-48M240 305l70 35 95-48" />
         <path d="M310 295v45" />
-      </g>
+      </m.g>
       <g className="blueprint-nodes" fill="currentColor">
         {[[240,215],[330,170],[405,207],[240,260],[310,295],[405,247],[240,305],[310,340],[405,292],[240,365]].map(([cx,cy],i) => (
-          <g key={i}><circle cx={cx} cy={cy} r="10" fill="currentColor" opacity=".1" /><circle cx={cx} cy={cy} r="3.5" /></g>
+          <g key={i}><m.circle cx={cx} cy={cy} r="10" fill="currentColor" initial={false} whileInView={reduced ? { opacity: 0.1 } : { opacity: [0.05, 0.25, 0.05], r: [7, 13, 7] }} transition={{ duration: 3, delay: i * 0.15, repeat: Infinity, ease: "easeInOut" }} /><circle cx={cx} cy={cy} r="3.5" /></g>
         ))}
       </g>
       <g className="blueprint-dimensions" stroke="currentColor" strokeWidth=".7">

@@ -1,8 +1,8 @@
 {
-  "generatedAt": "2026-10-04T17:33:43.875Z",
+  "generatedAt": "2026-10-04T18:15:51.136Z",
   "counts": {
     "lib": 29,
-    "component": 36,
+    "component": 37,
     "content": 14,
     "context": 3,
     "page": 4,
@@ -156,6 +156,13 @@
       "type": "component",
       "group": "component",
       "path": "src/components/HeaderSlot.tsx"
+    },
+    {
+      "id": "components/landing/AnimatedIcon",
+      "label": "AnimatedIcon",
+      "type": "component",
+      "group": "component",
+      "path": "src/components/landing/AnimatedIcon.tsx"
     },
     {
       "id": "components/landing/BuildingBlueprint",
@@ -1098,6 +1105,16 @@
     },
     {
       "from": "components/landing/Workflow",
+      "to": "components/landing/AnimatedIcon",
+      "kind": "imports"
+    },
+    {
+      "from": "components/landing/Workflow",
+      "to": "components/ui/button",
+      "kind": "imports"
+    },
+    {
+      "from": "components/landing/Workflow",
       "to": "services/landing.service",
       "kind": "imports"
     },
@@ -1468,6 +1485,11 @@
     },
     {
       "from": "pages/Landing",
+      "to": "components/landing/AnimatedIcon",
+      "kind": "imports"
+    },
+    {
+      "from": "pages/Landing",
       "to": "components/landing/BuildingBlueprint",
       "kind": "imports"
     },
@@ -1499,6 +1521,11 @@
     {
       "from": "pages/Landing",
       "to": "contexts/LangContext",
+      "kind": "imports"
+    },
+    {
+      "from": "pages/Landing",
+      "to": "lib/chrome-i18n",
       "kind": "imports"
     },
     {
