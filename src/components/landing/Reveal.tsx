@@ -4,9 +4,17 @@ import { m, useReducedMotion, useScroll, useTransform } from "motion/react";
 export function Reveal({ children, className, delay = 0 }: { children: ReactNode; className?: string; delay?: number }) {
   const ref = useRef<HTMLDivElement>(null);
   const reduced = useReducedMotion();
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start 90%", "end 30%"] });
-  // Fade each visible content block, including cards in sections taller than the viewport.
-  const opacity = useTransform(scrollYProgress, [0, 0.14, 0.5, 1], [0, 1, 1, 0]);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
+  // Fixed edge bands keep the readable middle consistent on short and tall screens.
+  const opacity = useTransform(scrollYProgress, (progress) => {
+    if (!ref.current || typeof window === "undefined") return 1;
+    const height = ref.current.offsetHeight;
+    const viewportHeight = window.innerHeight;
+    const top = viewportHeight - progress * (viewportHeight + height);
+    const entering = (viewportHeight - top) / 96;
+    const leaving = (top + height - 80) / 120;
+    return Math.max(0, Math.min(1, entering, leaving));
+  });
   return (
     <m.div
       ref={ref}
