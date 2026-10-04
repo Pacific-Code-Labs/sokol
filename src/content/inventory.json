@@ -1,8 +1,8 @@
 {
-  "generatedAt": "2026-10-04T14:27:31.537Z",
+  "generatedAt": "2026-10-04T17:33:43.875Z",
   "counts": {
-    "lib": 26,
-    "component": 31,
+    "lib": 29,
+    "component": 36,
     "content": 14,
     "context": 3,
     "page": 4,
@@ -158,6 +158,34 @@
       "path": "src/components/HeaderSlot.tsx"
     },
     {
+      "id": "components/landing/BuildingBlueprint",
+      "label": "BuildingBlueprint",
+      "type": "component",
+      "group": "component",
+      "path": "src/components/landing/BuildingBlueprint.tsx"
+    },
+    {
+      "id": "components/landing/Reveal",
+      "label": "Reveal",
+      "type": "component",
+      "group": "component",
+      "path": "src/components/landing/Reveal.tsx"
+    },
+    {
+      "id": "components/landing/ScrollSection",
+      "label": "ScrollSection",
+      "type": "component",
+      "group": "component",
+      "path": "src/components/landing/ScrollSection.tsx"
+    },
+    {
+      "id": "components/landing/Workflow",
+      "label": "Workflow",
+      "type": "component",
+      "group": "component",
+      "path": "src/components/landing/Workflow.tsx"
+    },
+    {
       "id": "components/LangLayout",
       "label": "LangLayout",
       "type": "component",
@@ -205,6 +233,13 @@
       "type": "component",
       "group": "component",
       "path": "src/components/ui/button.tsx"
+    },
+    {
+      "id": "components/ui/CurrentLanguageToggle",
+      "label": "CurrentLanguageToggle",
+      "type": "component",
+      "group": "component",
+      "path": "src/components/ui/CurrentLanguageToggle.tsx"
     },
     {
       "id": "components/ui/dialog",
@@ -550,11 +585,32 @@
       "path": "src/services/sokolApi.ts"
     },
     {
+      "id": "styles/landing.css",
+      "label": "landing.css",
+      "type": "lib",
+      "group": "lib",
+      "path": "src/styles/landing.css"
+    },
+    {
       "id": "test/ChatPanel.test",
       "label": "ChatPanel.test",
       "type": "lib",
       "group": "lib",
       "path": "src/test/ChatPanel.test.tsx"
+    },
+    {
+      "id": "test/HeroContent.test",
+      "label": "HeroContent.test",
+      "type": "lib",
+      "group": "lib",
+      "path": "src/test/HeroContent.test.ts"
+    },
+    {
+      "id": "test/LandingInteractions.test",
+      "label": "LandingInteractions.test",
+      "type": "lib",
+      "group": "lib",
+      "path": "src/test/LandingInteractions.test.tsx"
     },
     {
       "id": "test/ResponseCards.test",
@@ -1041,6 +1097,11 @@
       "kind": "imports"
     },
     {
+      "from": "components/landing/Workflow",
+      "to": "services/landing.service",
+      "kind": "imports"
+    },
+    {
       "from": "components/LangLayout",
       "to": "components/Header",
       "kind": "imports"
@@ -1067,7 +1128,17 @@
     },
     {
       "from": "components/LanguageToggle",
+      "to": "components/ui/CurrentLanguageToggle",
+      "kind": "imports"
+    },
+    {
+      "from": "components/LanguageToggle",
       "to": "contexts/LangContext",
+      "kind": "imports"
+    },
+    {
+      "from": "components/LanguageToggle",
+      "to": "lib/chrome-i18n",
       "kind": "imports"
     },
     {
@@ -1397,6 +1468,26 @@
     },
     {
       "from": "pages/Landing",
+      "to": "components/landing/BuildingBlueprint",
+      "kind": "imports"
+    },
+    {
+      "from": "pages/Landing",
+      "to": "components/landing/Reveal",
+      "kind": "imports"
+    },
+    {
+      "from": "pages/Landing",
+      "to": "components/landing/ScrollSection",
+      "kind": "imports"
+    },
+    {
+      "from": "pages/Landing",
+      "to": "components/landing/Workflow",
+      "kind": "imports"
+    },
+    {
+      "from": "pages/Landing",
       "to": "components/SiteFooter",
       "kind": "imports"
     },
@@ -1423,6 +1514,11 @@
     {
       "from": "pages/Landing",
       "to": "services/landing.service",
+      "kind": "imports"
+    },
+    {
+      "from": "pages/Landing",
+      "to": "styles/landing.css",
       "kind": "imports"
     },
     {
@@ -1623,6 +1719,31 @@
     {
       "from": "test/ChatPanel.test",
       "to": "lib/i18n",
+      "kind": "imports"
+    },
+    {
+      "from": "test/HeroContent.test",
+      "to": "repositories/content.repository",
+      "kind": "imports"
+    },
+    {
+      "from": "test/LandingInteractions.test",
+      "to": "components/landing/Workflow",
+      "kind": "imports"
+    },
+    {
+      "from": "test/LandingInteractions.test",
+      "to": "components/LanguageToggle",
+      "kind": "imports"
+    },
+    {
+      "from": "test/LandingInteractions.test",
+      "to": "contexts/LangContext",
+      "kind": "imports"
+    },
+    {
+      "from": "test/LandingInteractions.test",
+      "to": "services/landing.service",
       "kind": "imports"
     },
     {

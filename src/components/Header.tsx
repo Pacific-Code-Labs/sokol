@@ -67,7 +67,7 @@ export function Header({ actionsRef }: HeaderProps) {
   };
 
   return (
-    <header className="sticky top-0 z-30 border-b border-border bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60 no-print">
+    <header className={cn(onHome && "premium-header", "sticky top-0 z-30 border-b border-border bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60 no-print")}>
       <div className="container flex h-16 items-center justify-between gap-4">
         <div className="flex min-w-0 items-center gap-8">
           <Link to={localizedPath(lang, "/")} onClick={(event) => {
@@ -140,7 +140,7 @@ export function Header({ actionsRef }: HeaderProps) {
           {/* Mobile / tablet menu */}
           <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
             <SheetTrigger asChild>
-              <Button variant="outline" size="sm" className="w-8 px-0 lg:hidden" aria-label={chrome.nav.openMenu}>
+              <Button variant="outline" size="md" className="h-10 w-10 px-0 lg:hidden" aria-label={chrome.nav.openMenu}>
                 <Menu className="h-4 w-4" />
               </Button>
             </SheetTrigger>

@@ -1,35 +1,43 @@
-import { ArrowRight } from "lucide-react";
-import type { LucideIcon } from "lucide-react";
+import { ArrowDown, ArrowRight, Check, MoveUpRight, ShieldCheck } from "lucide-react";
+import { LazyMotion, domAnimation, MotionConfig } from "motion/react";
+import { useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { SiteFooter } from "@/components/SiteFooter";
+import { BuildingBlueprint } from "@/components/landing/BuildingBlueprint";
+import { ScrollSection } from "@/components/landing/ScrollSection";
+import { Workflow } from "@/components/landing/Workflow";
+import { Reveal } from "@/components/landing/Reveal";
 import { useLang } from "@/contexts/LangContext";
-import { Link, useLocation } from "react-router-dom";
-import { useEffect } from "react";
 import { localizedPath } from "@/lib/paths";
 import { resolveSeo, useHeadTags } from "@/lib/seo";
 import {
-  getHeroVM,
-  getProblemsVM,
-  getSolutionsVM,
-  getFeaturesVM,
-  getHowItWorksVM,
-  getCtaVM,
+  getHeroVM, getProblemsVM, getSolutionsVM, getFeaturesVM, getHowItWorksVM, getCtaVM,
   type CardVM,
 } from "@/services/landing.service";
+import "@/styles/landing.css";
+
+function FeatureCard({ card, index }: { card: CardVM; index: number }) {
+  return (
+    <Reveal className={`premium-feature premium-feature--${index}`} delay={(index % 3) * 0.06}>
+      <div className="premium-feature-top"><span className="premium-icon"><card.Icon aria-hidden="true" /></span><h3>{card.title}</h3><span className="premium-card-index">{String(index + 1).padStart(2, "0")}</span></div>
+      <p>{card.description}</p>
+      <div className="feature-detail" aria-hidden="true">
+        {index === 0 ? <div className="feature-signal"><span /><span /><span /><span /><span /><span /><span /></div> :
+         index === 1 ? <div className="feature-reference"><span>NFPA</span><div><i /><i /><i /></div><ShieldCheck /></div> :
+         <div className="feature-lines"><i /><i /><i /></div>}
+      </div>
+    </Reveal>
+  );
+}
+
 
 const Landing = () => {
   const { lang } = useLang();
-  // The public demo is a page of this site (it calls the public API as a guest).
   const demoHref = localizedPath(lang, "/demo");
-
   useHeadTags(resolveSeo("home", lang), lang, "home");
-
-  // Header section links from other pages land here as /<lang>#<section>.
   const { hash } = useLocation();
-  useEffect(() => {
-    if (hash) document.getElementById(hash.slice(1))?.scrollIntoView();
-  }, [hash]);
-
+  useEffect(() => { if (hash) document.getElementById(hash.slice(1))?.scrollIntoView(); }, [hash]);
   const hero = getHeroVM(lang);
   const problems = getProblemsVM(lang);
   const solutions = getSolutionsVM(lang);
@@ -37,153 +45,68 @@ const Landing = () => {
   const how = getHowItWorksVM(lang);
   const cta = getCtaVM(lang);
 
-  const renderCard = (
-    { id, Icon, title, description }: CardVM,
-    opts: { tone?: "primary" | "destructive"; index?: number } = {}
-  ) => {
-    const tone = opts.tone ?? "primary";
-    const toneCls =
-      tone === "destructive"
-        ? "bg-destructive/10 border-destructive/30 text-destructive"
-        : "bg-primary/10 border-primary/30 text-primary";
-    return (
-      <div key={id} className="relative rounded-lg border border-border bg-card overflow-hidden hover:border-primary/40 transition-colors">
-        {opts.index !== undefined && (
-          <div className="absolute top-3 right-3 text-xs font-mono text-primary bg-background border border-primary/30 px-2 py-0.5 rounded">
-            0{opts.index + 1}
-          </div>
-        )}
-        <div className="flex items-center gap-3 border-b border-border px-4 py-3 bg-muted/30">
-          <div className={`flex h-9 w-9 items-center justify-center rounded-md border ${toneCls}`}>
-            <Icon className="h-5 w-5" />
-          </div>
-          <div className="text-sm font-semibold">{title}</div>
-        </div>
-        <div className="px-4 py-4">
-          <p className="text-sm text-muted-foreground leading-relaxed">{description}</p>
-        </div>
-      </div>
-    );
-  };
-
   return (
-    <div className="min-h-[calc(100dvh-4rem)] bg-background text-foreground">
-      {/* Hero */}
-      <section className="relative overflow-hidden border-b border-border">
-        <div
-          className="absolute inset-0 -z-10 opacity-60"
-          style={{
-            background:
-              "radial-gradient(800px 400px at 70% -10%, hsl(var(--primary) / 0.18), transparent 60%), radial-gradient(600px 300px at 10% 10%, hsl(var(--primary) / 0.10), transparent 60%)",
-          }}
-        />
-        <div className="container pt-10 pb-14 md:pt-14 md:pb-20 lg:pt-16 lg:pb-24">
-          <div className="max-w-3xl">
-            <div className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-xs text-primary mb-6">
-              <hero.BadgeIcon className="h-3.5 w-3.5" aria-hidden />
-              {hero.badge}
+    <LazyMotion features={domAnimation} strict>
+    <MotionConfig reducedMotion="user">
+    <div className="premium-landing">
+      <ScrollSection className="premium-hero" aria-labelledby="landing-title">
+        <div className="hero-atmosphere" aria-hidden="true" />
+        <div className="container premium-hero-grid">
+          <Reveal className="premium-hero-copy">
+            <div className="premium-badge"><span className="badge-dot" /><hero.BadgeIcon aria-hidden="true" />{hero.badge}</div>
+            <h1 id="landing-title">{hero.title}</h1>
+            <p className="premium-hero-subtitle">{hero.subtitle}</p>
+            <div className="premium-actions">
+              <Button asChild size="lg" className="premium-button"><Link to={demoHref}>{hero.ctaPrimary}<ArrowRight aria-hidden="true" /></Link></Button>
+              <a href="#how" className="premium-secondary">{hero.ctaSecondary}<ArrowDown aria-hidden="true" /></a>
             </div>
-            <h1 className="text-4xl md:text-6xl font-bold tracking-tight leading-[1.1]">
-              {hero.title}
-            </h1>
-            <p className="mt-6 text-lg md:text-xl text-muted-foreground max-w-2xl">
-              {hero.subtitle}
-            </p>
-            <div className="mt-8 flex flex-wrap gap-3">
-              <Button asChild size="lg" className="gap-2">
-                <Link to={demoHref}>
-                  {hero.ctaPrimary} <ArrowRight className="h-4 w-4" />
-                </Link>
-              </Button>
-              <Button asChild size="lg" variant="outline">
-                <a href="#how">{hero.ctaSecondary}</a>
-              </Button>
-            </div>
-            <p className="mt-6 text-sm text-muted-foreground">{hero.trust}</p>
-          </div>
+            <p className="premium-hero-note"><ShieldCheck aria-hidden="true" />{cta.subtitle}</p>
+          </Reveal>
+          <Reveal className="premium-hero-art" delay={0.1}>
+            <div className="blueprint-heading"><span className="premium-eyebrow">{hero.preview.eyebrow}</span><span className="blueprint-cross" aria-hidden="true">+</span></div>
+            <div className="blueprint-scene"><div className="blueprint-halo" aria-hidden="true" /><BuildingBlueprint /></div>
+            <div className="blueprint-caption"><span className="blueprint-caption-icon"><ShieldCheck aria-hidden="true" /></span><div><strong>{hero.preview.label}</strong><p>{hero.preview.caption}</p></div></div>
+            <span className="blueprint-disclaimer">{hero.preview.illustrationLabel}</span>
+          </Reveal>
         </div>
-      </section>
+        <div className="container"><div className="premium-trust">{hero.trust.split("·").map(item => <span key={item}><Check aria-hidden="true" />{item.trim()}</span>)}</div></div>
+      </ScrollSection>
 
-      {/* Problem */}
-      <section className="border-b border-border">
-        <div className="container py-12 md:py-16">
-          <div className="max-w-2xl mb-8 md:mb-10">
-            <div className="text-sm font-medium text-primary mb-3 uppercase tracking-wider">{problems.heading.eyebrow}</div>
-            <h2 className="text-3xl md:text-4xl font-bold tracking-tight">{problems.heading.title}</h2>
-          </div>
-          <div className="grid gap-6 md:grid-cols-3">
-            {problems.cards.map((c) => renderCard(c, { tone: "destructive" }))}
-          </div>
+      <ScrollSection className="premium-section premium-problems" aria-labelledby="problems-title">
+        <div className="container">
+          <Reveal className="premium-section-heading premium-heading-split"><span className="premium-eyebrow">{problems.heading.eyebrow}</span><h2 id="problems-title">{problems.heading.title}</h2></Reveal>
+          <div className="premium-problem-grid">{problems.cards.map((card, i) => <Reveal key={card.id} className="premium-problem" delay={i * 0.06}><card.Icon aria-hidden="true" /><h3>{card.title}</h3><p>{card.description}</p></Reveal>)}</div>
         </div>
-      </section>
+      </ScrollSection>
 
-      {/* Solution */}
-      <section className="border-b border-border bg-muted/20">
-        <div className="container py-12 md:py-16">
-          <div className="max-w-2xl mb-8 md:mb-10">
-            <div className="text-sm font-medium text-primary mb-3 uppercase tracking-wider">{solutions.heading.eyebrow}</div>
-            <h2 className="text-3xl md:text-4xl font-bold tracking-tight">{solutions.heading.title}</h2>
-            <p className="mt-4 text-muted-foreground text-lg">{solutions.heading.subtitle}</p>
-          </div>
-          <div className="grid gap-6 md:grid-cols-3">
-            {solutions.cards.map((c) => renderCard(c))}
-          </div>
+      <ScrollSection className="premium-section premium-solutions" aria-labelledby="solutions-title">
+        <div className="container premium-solution-grid">
+          <Reveal className="premium-section-heading"><span className="premium-eyebrow">{solutions.heading.eyebrow}</span><h2 id="solutions-title">{solutions.heading.title}</h2><p>{solutions.heading.subtitle}</p><Link to={demoHref} className="premium-text-link">{hero.ctaPrimary}<MoveUpRight aria-hidden="true" /></Link></Reveal>
+          <div className="premium-solution-list">{solutions.cards.map((card, i) => <Reveal key={card.id} className="premium-solution" delay={i * 0.06}><span className="premium-icon"><card.Icon aria-hidden="true" /></span><div><h3>{card.title}</h3><p>{card.description}</p></div><span className="premium-card-index">{String(i + 1).padStart(2, "0")}</span></Reveal>)}</div>
         </div>
-      </section>
+      </ScrollSection>
 
-      {/* Features */}
-      <section id="features" className="scroll-mt-16 border-b border-border">
-        <div className="container py-12 md:py-16">
-          <div className="max-w-2xl mb-8 md:mb-10">
-            <div className="text-sm font-medium text-primary mb-3 uppercase tracking-wider">{features.heading.eyebrow}</div>
-            <h2 className="text-3xl md:text-4xl font-bold tracking-tight">{features.heading.title}</h2>
-          </div>
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {features.cards.map((c) => renderCard(c))}
-          </div>
+      <ScrollSection id="features" className="premium-section premium-features" aria-labelledby="features-title">
+        <div className="container">
+          <Reveal className="premium-section-heading"><span className="premium-eyebrow">{features.heading.eyebrow}</span><h2 id="features-title">{features.heading.title}</h2></Reveal>
+          <div className="premium-feature-grid">{features.cards.map((card, i) => <FeatureCard key={card.id} card={card} index={i} />)}</div>
         </div>
-      </section>
+      </ScrollSection>
 
-      {/* How it works */}
-      <section id="how" className="scroll-mt-16 border-b border-border bg-muted/20">
-        <div className="container py-12 md:py-16">
-          <div className="max-w-2xl mb-8 md:mb-10">
-            <div className="text-sm font-medium text-primary mb-3 uppercase tracking-wider">{how.heading.eyebrow}</div>
-            <h2 className="text-3xl md:text-4xl font-bold tracking-tight">{how.heading.title}</h2>
-          </div>
-          <div className="grid gap-6 md:grid-cols-3">
-            {how.cards.map((c, i) => renderCard(c, { index: i }))}
-          </div>
+      <ScrollSection id="how" className="premium-section premium-how" aria-labelledby="how-title">
+        <div className="container">
+          <Reveal className="premium-section-heading"><span className="premium-eyebrow">{how.heading.eyebrow}</span><h2 id="how-title">{how.heading.title}</h2></Reveal>
+          <Reveal><Workflow cards={how.cards} preview={hero.preview} demoHref={demoHref} cta={hero.ctaPrimary} /></Reveal>
         </div>
-      </section>
+      </ScrollSection>
 
-      {/* CTA (the footer's top border closes it) */}
-      <section>
-        <div className="container pt-12 pb-8 md:pt-16 md:pb-10">
-          <div className="relative overflow-hidden rounded-2xl border border-primary/30 bg-card p-8 md:p-12 text-center">
-            <div
-              className="absolute inset-0 -z-10"
-              style={{
-                background:
-                  "radial-gradient(600px 300px at 50% 0%, hsl(var(--primary) / 0.18), transparent 70%)",
-              }}
-            />
-            <h2 className="text-3xl md:text-5xl font-bold tracking-tight">{cta.title}</h2>
-            <p className="mt-4 text-lg text-muted-foreground">{cta.subtitle}</p>
-            <div className="mt-8">
-              <Button asChild size="lg" className="gap-2">
-                <Link to={demoHref}>
-                  {cta.button} <ArrowRight className="h-4 w-4" />
-                </Link>
-              </Button>
-            </div>
-          </div>
-        </div>
-      </section>
-
+      <ScrollSection className="premium-cta-section" aria-labelledby="cta-title">
+        <div className="container"><Reveal className="premium-cta"><div className="cta-orbits" aria-hidden="true"><i /><i /><i /></div><span className="premium-icon"><ShieldCheck aria-hidden="true" /></span><h2 id="cta-title">{cta.title}</h2><p>{cta.subtitle}</p><Button asChild size="lg" className="premium-button"><Link to={demoHref}>{cta.button}<ArrowRight aria-hidden="true" /></Link></Button></Reveal></div>
+      </ScrollSection>
       <SiteFooter />
     </div>
+    </MotionConfig>
+    </LazyMotion>
   );
 };
-
 export default Landing;

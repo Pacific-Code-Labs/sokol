@@ -2,6 +2,7 @@
 // only importer of the JSON (bundled fallback + published overrides).
 export {
   getHero,
+  getBundledHero,
   getProblems,
   getSolutions,
   getFeatures,

@@ -36,6 +36,7 @@ export interface HeroVM {
   ctaPrimary: string;
   ctaSecondary: string;
   trust: string;
+  preview: { eyebrow: string; label: string; caption: string; illustrationLabel: string; workflowLabel: string; workflowHint: string; workflowNote: string };
 }
 
 export interface SectionHeadingVM {
@@ -68,6 +69,15 @@ export function getHeroVM(lang: Lang): HeroVM {
     ctaPrimary: pickLang(h.ctaPrimary, lang),
     ctaSecondary: pickLang(h.ctaSecondary, lang),
     trust: pickLang(h.trust, lang),
+    preview: {
+      eyebrow: pickLang(h.preview.eyebrow, lang),
+      label: pickLang(h.preview.label, lang),
+      caption: pickLang(h.preview.caption, lang),
+      illustrationLabel: pickLang(h.preview.illustrationLabel, lang),
+      workflowLabel: pickLang(h.preview.workflowLabel, lang),
+      workflowHint: pickLang(h.preview.workflowHint, lang),
+      workflowNote: pickLang(h.preview.workflowNote, lang),
+    },
   };
 }
 

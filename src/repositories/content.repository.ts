@@ -42,7 +42,11 @@ export type ThemesContent = typeof themes;
 export type SeoContent = typeof seo;
 export type MediaContent = typeof media;
 
-export const getHero = (): HeroContent => doc("hero", hero);
+export const getHero = (): HeroContent => {
+  const current = doc("hero", hero);
+  return { ...hero, ...current, preview: { ...hero.preview, ...current.preview } };
+};
+export const getBundledHero = (): HeroContent => hero;
 export const getProblems = (): ProblemsContent => doc("problems", problems);
 export const getSolutions = (): SolutionsContent => doc("solutions", solutions);
 export const getFeatures = (): FeaturesContent => doc("features", features);

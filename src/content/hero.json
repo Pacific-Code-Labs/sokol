@@ -23,5 +23,35 @@
   "trust": {
     "es": "Basado en NFPA · Contexto Costa Rica · Resultados estructurados",
     "en": "NFPA-based · Costa Rica context · Structured outputs"
+  },
+  "preview": {
+    "eyebrow": {
+      "es": "Diseñe con claridad",
+      "en": "Design with clarity"
+    },
+    "label": {
+      "es": "Del edificio a los requisitos",
+      "en": "From building to requirements"
+    },
+    "caption": {
+      "es": "Una perspectiva más clara de su proyecto.",
+      "en": "A clearer perspective on your project."
+    },
+    "illustrationLabel": {
+      "es": "Ilustración conceptual",
+      "en": "Concept illustration"
+    },
+    "workflowLabel": {
+      "es": "Explore el proceso",
+      "en": "Explore the process"
+    },
+    "workflowHint": {
+      "es": "Seleccione un paso para explorar el flujo.",
+      "en": "Select a step to explore the workflow."
+    },
+    "workflowNote": {
+      "es": "Vista ilustrativa del proceso. Pruebe la demo para evaluar su proyecto.",
+      "en": "Illustrative workflow preview. Try the demo to evaluate your project."
+    }
   }
 }
