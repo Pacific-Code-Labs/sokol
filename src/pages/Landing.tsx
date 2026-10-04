@@ -82,7 +82,7 @@ const Landing = ({ section }: { section?: "features" | "how" }) => {
             <span className="blueprint-disclaimer">{hero.preview.illustrationLabel}</span>
           </Reveal>
         </div>
-        <div className="container"><div className="premium-trust">{hero.trust.split("·").map(item => <span key={item}><Check aria-hidden="true" />{item.trim()}</span>)}</div></div>
+        <div className="container"><Reveal className="premium-trust">{hero.trust.split("·").map(item => <span key={item}><Check aria-hidden="true" />{item.trim()}</span>)}</Reveal></div>
       </ScrollSection>
 
       <ScrollSection className="premium-section premium-problems" aria-labelledby="problems-title">
