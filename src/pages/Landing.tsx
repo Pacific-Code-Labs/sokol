@@ -5,6 +5,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { SiteFooter } from "@/components/SiteFooter";
 import { AnimatedIcon } from "@/components/landing/AnimatedIcon";
+import { FeatureVisual } from "@/components/landing/FeatureVisual";
 import { BuildingBlueprint } from "@/components/landing/BuildingBlueprint";
 import { ScrollSection } from "@/components/landing/ScrollSection";
 import { Workflow } from "@/components/landing/Workflow";
@@ -25,9 +26,7 @@ function FeatureCard({ card, index }: { card: CardVM; index: number }) {
       <div className="premium-feature-top"><span className="premium-icon"><AnimatedIcon Icon={card.Icon} /></span><h3>{card.title}</h3><span className="premium-card-index">{String(index + 1).padStart(2, "0")}</span></div>
       <p>{card.description}</p>
       <div className="feature-detail" aria-hidden="true">
-        {index === 0 ? <div className="feature-signal"><span /><span /><span /><span /><span /><span /><span /></div> :
-         index === 1 ? <div className="feature-reference"><span>NFPA</span><div><i /><i /><i /></div><ShieldCheck /></div> :
-         <div className="feature-lines"><i /><i /><i /></div>}
+        <FeatureVisual id={card.id} Icon={card.Icon} />
       </div>
     </Reveal>
   );

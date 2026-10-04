@@ -73,36 +73,36 @@
 .premium-feature-top { display: flex; align-items: center; gap: .85rem; min-height: 3.2rem; }
 .premium-feature h3 { flex: 1; min-width: 0; font-size: 1rem; }
 .premium-feature p { font-size: .8rem; margin-top: .7rem; }
-.feature-detail { margin-top: auto; padding-top: 1.7rem; height: 4.7rem; flex-shrink: 0; display: flex; align-items: center; overflow: hidden; }
-.feature-signal { display: flex; align-items: center; gap: .4rem; width: 100%; }
-.feature-signal span { height: .4rem; width: 14%; border-radius: 3px; background: hsl(var(--primary) / .2); }
-.feature-signal span:nth-child(2n) { height: 1.5rem; background: hsl(var(--primary) / .35); }
-.feature-signal span:nth-child(3n) { height: 2.7rem; background: hsl(var(--primary) / .6); }
-.feature-reference { display: flex; gap: 1rem; align-items: center; width: 100%; color: hsl(var(--primary)); }
-.feature-reference > span:not(.animated-icon) { border: 1px solid var(--premium-line); border-radius: .3rem; padding: .5rem; font: .65rem ui-monospace, monospace; color: hsl(var(--muted-foreground)); }
-.feature-reference > div { flex: 1; }
-.feature-reference i, .feature-lines i { display: block; height: 3px; background: var(--premium-line); border-radius: 3px; margin-block: .5rem; }
-.feature-reference i:nth-child(2), .feature-lines i:nth-child(2) { width: 80%; }
-.feature-reference i:last-child, .feature-lines i:last-child { width: 55%; }
-.feature-reference > .animated-icon { width: 1.1rem; height: 1.1rem; }
-.feature-lines { width: 100%; }
+/* Equal illustration stages keep every card footer aligned within its row. */
+.feature-detail { margin-top: auto; padding-top: 1.4rem; height: 8rem; flex-shrink: 0; display: flex; align-items: center; overflow: hidden; }
+.feature-visual { width: 100%; height: 100%; color: hsl(var(--primary)); overflow: visible; }
+.feature-visual .visual-grid { stroke: hsl(var(--foreground) / .18); }
+.feature-visual .visual-surface { fill: hsl(var(--background)); stroke: hsl(var(--primary) / .45); }
+.feature-visual .visual-tint { fill: hsl(var(--primary) / .08); stroke: hsl(var(--primary) / .35); }
+.feature-visual .visual-fill { fill: hsl(var(--primary) / .5); stroke: none; }
+.feature-visual .visual-pin { fill: hsl(var(--background)); stroke: hsl(var(--primary)); }
+
 .premium-how { padding-top: 1.5rem; }
 .premium-workflow { max-width: 720px; margin-inline: auto; }
 .workflow-panel { border: 1px solid var(--premium-line); border-radius: 1rem; padding: 1.75rem; background: radial-gradient(ellipse at 50% 30%, hsl(var(--primary) / .06), transparent 65%), var(--premium-soft); }
 .workflow-panel-top { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
 .workflow-count { font: .65rem ui-monospace, monospace; color: hsl(var(--muted-foreground)); }
 .workflow-visual { padding: 1.75rem 0; }
-.workflow-orbit { margin-inline: auto; display: grid; place-items: center; width: 130px; height: 130px; border: 1px solid hsl(var(--primary) / .15); outline: 1px dashed var(--premium-line); outline-offset: 14px; border-radius: 50%; }
-.workflow-orbit-inner { display: grid; place-items: center; width: 82px; height: 82px; border: 1px solid hsl(var(--primary) / .2); border-radius: 1.1rem; transform: rotate(-8deg); background: hsl(var(--background)); box-shadow: 0 8px 32px hsl(var(--primary) / .1); }
-.workflow-orbit svg { transform: rotate(8deg); width: 2rem; height: 2rem; color: hsl(var(--primary)); }
+.workflow-orbit { position: relative; display: grid; place-items: center; width: 160px; height: 160px; flex-shrink: 0; isolation: isolate; justify-self: center; }
+.workflow-rings { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: -1; overflow: visible; fill: none; stroke-width: 1; }
+.workflow-ring-outer { stroke: var(--premium-line); stroke-dasharray: 3 5; }
+.workflow-ring-inner { stroke: hsl(var(--primary) / .2); }
+.workflow-orbit-inner { display: grid; place-items: center; width: 82px; height: 82px; }
+.workflow-icon-transition { display: inline-flex; }
+.workflow-orbit-inner svg { width: 2rem; height: 2rem; color: hsl(var(--primary)); }
 .workflow-progress { display: flex; gap: .35rem; justify-content: center; margin-top: 2rem; }
 .workflow-progress span { width: 2rem; height: 3px; background: var(--premium-line); border-radius: 3px; transition: background-color .2s; }
 .workflow-progress .is-complete { background: hsl(var(--primary)); }
-.workflow-step { min-height: 5.5rem; }
+.workflow-step { min-height: 6.5rem; overflow: hidden; }
 .workflow-step p { font-size: .85rem; margin-top: .6rem; }
-.workflow-navigation { display: flex; justify-content: space-between; gap: 1rem; margin-top: 1.5rem; }
-.workflow-navigation button { gap: .65rem; min-height: 2.75rem; }
-.workflow-navigation svg { width: 1rem; height: 1rem; }
+.workflow-navigation { display: grid; grid-template-columns: 2.75rem minmax(0, 1fr) 2.75rem; align-items: center; width: 100%; }
+.workflow-navigation button { width: 2.75rem; height: 2.75rem; flex-shrink: 0; }
+.workflow-navigation button svg { width: 1rem; height: 1rem; }
 .workflow-panel > p { font-size: .8rem; margin-top: .5rem; }
 .workflow-panel .workflow-note { font-size: .65rem; margin-top: 1.5rem; border-top: 1px solid var(--premium-line); padding-top: .85rem; }
 .premium-cta-section { padding: 0 0 5rem; }

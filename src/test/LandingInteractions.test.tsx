@@ -2,30 +2,35 @@ import { act, cleanup, fireEvent, render, screen, within } from "@testing-librar
 import { afterEach, expect, it, vi } from "vitest";
 import { MemoryRouter, useLocation } from "react-router-dom";
 import { Workflow } from "@/components/landing/Workflow";
+import { LazyMotion, domAnimation } from "motion/react";
 import { LanguageToggle } from "@/components/LanguageToggle";
 import type { LucideIcon } from "lucide-react";
 vi.mock("@/components/landing/AnimatedIcon", () => ({ AnimatedIcon: ({ Icon }: { Icon: LucideIcon }) => <Icon aria-hidden="true" /> }));
+vi.mock("motion/react", async importOriginal => ({
+  ...await importOriginal<typeof import("motion/react")>(),
+  useInView: () => false,
+}));
 import { LangProvider } from "@/contexts/LangContext";
 import { getHeroVM, getHowItWorksVM } from "@/services/landing.service";
 
 afterEach(() => { cleanup(); localStorage.clear(); vi.useRealTimers(); });
 
-it("navigates workflow steps inside the card and disables the endpoints", () => {
+it("navigates workflow steps inside the card and disables the endpoints", async () => {
   const cards = getHowItWorksVM("en").cards;
-  render(<MemoryRouter><Workflow cards={cards} preview={getHeroVM("en").preview} demoHref="/en/demo" cta="Try the demo" previousLabel="Previous" nextLabel="Next" /></MemoryRouter>);
+  render(<MemoryRouter><LazyMotion features={domAnimation}><Workflow cards={cards} preview={getHeroVM("en").preview} demoHref="/en/demo" cta="Try the demo" previousLabel="Previous" nextLabel="Next" /></LazyMotion></MemoryRouter>);
   const region = screen.getByRole("region", { name: "Explore the process" });
   const previous = within(region).getByRole("button", { name: "Previous" });
   const next = within(region).getByRole("button", { name: "Next" });
   expect(previous).toBeDisabled();
   expect(screen.queryByRole("tablist")).not.toBeInTheDocument();
   fireEvent.click(next);
-  expect(within(region).getByRole("heading")).toHaveTextContent(cards[1].title);
+  expect(await within(region).findByRole("heading", { name: cards[1].title })).toBeInTheDocument();
   expect(previous).toBeEnabled();
   fireEvent.click(next);
-  expect(within(region).getByRole("heading")).toHaveTextContent(cards[2].title);
+  expect(await within(region).findByRole("heading", { name: cards[2].title })).toBeInTheDocument();
   expect(next).toBeDisabled();
   fireEvent.click(previous);
-  expect(within(region).getByRole("heading")).toHaveTextContent(cards[1].title);
+  expect(await within(region).findByRole("heading", { name: cards[1].title })).toBeInTheDocument();
   expect(within(region).getByRole("link")).toHaveAttribute("href", "/en/demo");
 });
 
