@@ -173,13 +173,13 @@
 .premium-reveal:focus-within { opacity: 1 !important; }
 
 /* The entire process stays in view on common desktop/mobile and short landscape screens. */
-.premium-how .premium-section-heading { margin: 0 auto 1rem; text-align: center; }
-.premium-how .premium-workflow { max-width: 640px; }
-.premium-how .workflow-panel { padding: 1.25rem; }
-.premium-how .workflow-visual { padding-block: .75rem; }
-.premium-how .workflow-orbit { width: 112px; height: 112px; }
+.premium-how .premium-section-heading { margin: 0 auto 1.25rem; text-align: center; }
+.premium-how .premium-workflow { max-width: 680px; }
+.premium-how .workflow-panel { padding: 1.5rem; }
+.premium-how .workflow-visual { padding-block: 1rem; }
+.premium-how .workflow-orbit { width: 128px; height: 128px; }
 .premium-how .workflow-orbit-inner { width: 100%; height: 100%; max-width: 82px; max-height: 82px; min-width: 0; min-height: 0; }
-.premium-how .workflow-progress { margin-top: .75rem; }
+.premium-how .workflow-progress { margin-top: 1rem; }
 .premium-how .workflow-step { min-height: 4.5rem; }
 .premium-how .workflow-panel .premium-text-link { margin-top: .75rem; }
 @media (max-height: 650px) and (min-width: 640px) {
@@ -187,7 +187,7 @@
   .premium-how .premium-section-heading { margin-bottom: .5rem; }
   .premium-how h2 { font-size: clamp(1.5rem, 3vw, 2.25rem); }
   .premium-how .workflow-panel { padding: 1rem; }
-  .premium-how .workflow-orbit { width: 72px; height: 72px; }
+  .premium-how .workflow-orbit { width: 88px; height: 88px; }
   .premium-how .workflow-visual { padding-block: .5rem; }
   .premium-how .workflow-progress { margin-top: .5rem; }
   .premium-how .workflow-step { min-height: 4rem; }
@@ -198,9 +198,9 @@
 @media (max-height: 500px) and (min-width: 640px) {
   .premium-how h2 { font-size: 1.25rem; }
   .premium-how .premium-section-heading .premium-eyebrow { margin-bottom: .25rem; }
-  .premium-how .workflow-panel { padding: .75rem; }
-  .premium-how .workflow-orbit { width: 56px; height: 56px; }
-  .premium-how .workflow-visual { padding-block: .375rem; }
+  .premium-how .workflow-panel { padding: 1rem; }
+  .premium-how .workflow-orbit { width: 72px; height: 72px; }
+  .premium-how .workflow-visual { padding-block: .5rem; }
   .premium-how .workflow-progress { margin-top: .375rem; }
   .premium-how .workflow-step { min-height: 3.5rem; }
 }
