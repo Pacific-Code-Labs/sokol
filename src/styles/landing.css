@@ -207,3 +207,6 @@
   .premium-how .workflow-progress { margin-top: .375rem; }
   .premium-how .workflow-step { min-height: 3.5rem; }
 }
+
+.workflow-details { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 1rem; }
+.premium-how .workflow-details .premium-text-link { margin-top: 0; white-space: nowrap; }

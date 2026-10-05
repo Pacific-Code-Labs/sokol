@@ -39,12 +39,14 @@ export function Workflow({ cards, preview, demoHref, cta, previousLabel, nextLab
           </div>
           <div className="workflow-progress" aria-hidden="true">{cards.map((card, i) => <span key={card.id} className={i <= activeIndex ? "is-complete" : ""} />)}</div>
         </div>
+        <div className="workflow-details">
         <div className="workflow-step" aria-live="polite" aria-atomic="true" id={`${uid}-step`}>
           <AnimatePresence mode="wait" initial={false} custom={direction}>
             <m.div key={active.id} custom={direction} variants={{ enter: (travel: number) => ({ opacity: 0, x: reduced ? 0 : travel * 18 }), shown: { opacity: 1, x: 0 }, leave: (travel: number) => ({ opacity: 0, x: reduced ? 0 : travel * -18 }) }} initial="enter" animate="shown" exit="leave" transition={{ duration: reduced ? 0 : 0.18, ease: "easeOut" }}><h3>{active.title}</h3><p>{active.description}</p></m.div>
           </AnimatePresence>
         </div>
         <Link to={demoHref} className="premium-text-link">{cta}<MoveUpRight aria-hidden="true" /></Link>
+        </div>
         <p className="workflow-note">{preview.workflowNote}</p>
       </div>
     </div>
