@@ -37,7 +37,6 @@ export function Workflow({ cards, preview, demoHref, cta, previousLabel, nextLab
             </div>
             <Button size="lg" className="p-0" variant="outline" disabled={activeIndex === cards.length - 1} aria-label={nextLabel} aria-controls={`${uid}-step`} onClick={() => { setDirection(1); setSelected(activeIndex + 1); }}><ArrowRight aria-hidden="true" /></Button>
           </div>
-          <div className="workflow-progress" aria-hidden="true">{cards.map((card, i) => <span key={card.id} className={i <= activeIndex ? "is-complete" : ""} />)}</div>
         </div>
         <div className="workflow-details">
         <div className="workflow-step" aria-live="polite" aria-atomic="true" id={`${uid}-step`}>
@@ -47,7 +46,9 @@ export function Workflow({ cards, preview, demoHref, cta, previousLabel, nextLab
         </div>
         <Link to={demoHref} className="premium-text-link">{cta}<MoveUpRight aria-hidden="true" /></Link>
         </div>
-        <p className="workflow-note">{preview.workflowNote}</p>
+        <div className="workflow-footer">
+          <div className="workflow-progress" aria-hidden="true">{cards.map((card, i) => <span key={card.id} className={i <= activeIndex ? "is-complete" : ""} />)}</div>
+        </div>
       </div>
     </div>
   );
