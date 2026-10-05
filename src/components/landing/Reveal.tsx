@@ -12,7 +12,8 @@ export function Reveal({ children, className, delay = 0 }: { children: ReactNode
     const viewportHeight = window.innerHeight;
     const top = viewportHeight - progress * (viewportHeight + height);
     const entering = (viewportHeight - top) / 96;
-    const leaving = (top + height - 80) / 120;
+    // Small headings need a shorter exit band to stay readable above compact cards.
+    const leaving = (top + height - 80) / Math.max(1, Math.min(120, height * 0.6));
     return Math.max(0, Math.min(1, entering, leaving));
   });
   return (

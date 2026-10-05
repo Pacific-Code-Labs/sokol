@@ -107,7 +107,7 @@ const Landing = ({ section }: { section?: "features" | "how" }) => {
       </ScrollSection>
 
       <ScrollSection id="how" className="premium-section premium-how" aria-labelledby="how-title">
-        <div className="container premium-how-layout">
+        <div className="container">
           <Reveal className="premium-section-heading"><span className="premium-eyebrow">{how.heading.eyebrow}</span><h2 id="how-title">{how.heading.title}</h2></Reveal>
           <Reveal><Workflow cards={how.cards} preview={hero.preview} demoHref={demoHref} cta={hero.ctaPrimary} previousLabel={chrome.nav.previousStep} nextLabel={chrome.nav.nextStep} /></Reveal>
         </div>

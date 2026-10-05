@@ -174,7 +174,8 @@
 .premium-reveal:focus-within { opacity: 1 !important; }
 
 /* The entire process stays in view on common desktop/mobile and short landscape screens. */
-.premium-how .premium-section-heading { margin-bottom: 1rem; }
+.premium-how .premium-section-heading { margin: 0 auto 1rem; text-align: center; }
+.premium-how .premium-workflow { max-width: 640px; }
 .premium-how .workflow-panel { padding: 1.25rem; }
 .premium-how .workflow-visual { padding-block: .75rem; }
 .premium-how .workflow-orbit { width: 112px; height: 112px; }
@@ -185,8 +186,7 @@
 .premium-how .workflow-panel .workflow-note { margin-top: .75rem; padding-top: .5rem; }
 @media (max-height: 650px) and (min-width: 640px) {
   .premium-how { padding-block: .75rem; scroll-margin-top: 4.5rem; }
-  .premium-how-layout { display: grid; grid-template-columns: .65fr 1.35fr; align-items: center; gap: 1.5rem; }
-  .premium-how .premium-section-heading { margin: 0; }
+  .premium-how .premium-section-heading { margin-bottom: .5rem; }
   .premium-how h2 { font-size: clamp(1.5rem, 3vw, 2.25rem); }
   .premium-how .workflow-panel { padding: 1rem; }
   .premium-how .workflow-orbit { width: 72px; height: 72px; }
@@ -199,6 +199,8 @@
   .premium-how .workflow-panel .workflow-note { margin-top: .5rem; padding-top: .4rem; font-size: .6rem; line-height: 1.5; }
 }
 @media (max-height: 500px) and (min-width: 640px) {
+  .premium-how h2 { font-size: 1.25rem; }
+  .premium-how .premium-section-heading .premium-eyebrow { margin-bottom: .25rem; }
   .premium-how .workflow-panel { padding: .75rem; }
   .premium-how .workflow-orbit { width: 56px; height: 56px; }
   .premium-how .workflow-visual { padding-block: .375rem; }
