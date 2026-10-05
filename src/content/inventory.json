@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-10-05T00:44:12.353Z",
+  "generatedAt": "2026-10-05T01:54:11.648Z",
   "counts": {
-    "lib": 31,
+    "lib": 33,
     "component": 38,
     "content": 14,
     "context": 3,
@@ -488,6 +488,13 @@
       "path": "src/lib/icons.ts"
     },
     {
+      "id": "lib/landing-scroll",
+      "label": "landing-scroll",
+      "type": "lib",
+      "group": "lib",
+      "path": "src/lib/landing-scroll.ts"
+    },
+    {
       "id": "lib/links",
       "label": "links",
       "type": "lib",
@@ -640,6 +647,13 @@
       "type": "lib",
       "group": "lib",
       "path": "src/test/LandingInteractions.test.tsx"
+    },
+    {
+      "id": "test/LandingScroll.test",
+      "label": "LandingScroll.test",
+      "type": "lib",
+      "group": "lib",
+      "path": "src/test/LandingScroll.test.ts"
     },
     {
       "id": "test/LandingSection.test",
@@ -1114,6 +1128,11 @@
     },
     {
       "from": "components/Header",
+      "to": "lib/landing-scroll",
+      "kind": "imports"
+    },
+    {
+      "from": "components/Header",
       "to": "lib/links",
       "kind": "imports"
     },
@@ -1569,6 +1588,11 @@
     },
     {
       "from": "pages/Landing",
+      "to": "lib/landing-scroll",
+      "kind": "imports"
+    },
+    {
+      "from": "pages/Landing",
       "to": "lib/paths",
       "kind": "imports"
     },
@@ -1810,6 +1834,11 @@
     {
       "from": "test/LandingInteractions.test",
       "to": "services/landing.service",
+      "kind": "imports"
+    },
+    {
+      "from": "test/LandingScroll.test",
+      "to": "lib/landing-scroll",
       "kind": "imports"
     },
     {

@@ -10,6 +10,7 @@ import { tChrome } from "@/lib/chrome-i18n";
 import { cn } from "@/lib/utils";
 import { getBrandingVM } from "@/services/branding.service";
 import { localizedPath, stripLangPrefix } from "@/lib/paths";
+import { scrollToLandingSection } from "@/lib/landing-scroll";
 import { useLandingSection } from "@/hooks/useLandingSection";
 import { appHref, newTab } from "@/lib/links";
 
@@ -62,7 +63,7 @@ export function Header({ actionsRef }: HeaderProps) {
     closeMobile();
     if (item.section ? rest === `/${item.section}` : isActive(item)) {
       e.preventDefault();
-      if (item.section) document.getElementById(item.section)?.scrollIntoView({ behavior: "smooth" });
+      if (item.section) requestAnimationFrame(() => requestAnimationFrame(() => scrollToLandingSection(item.section!, "smooth")));
       else window.scrollTo({ top: 0, behavior: "smooth" });
     }
   };

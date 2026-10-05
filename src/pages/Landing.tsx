@@ -12,6 +12,7 @@ import { Workflow } from "@/components/landing/Workflow";
 import { Reveal } from "@/components/landing/Reveal";
 import { useLang } from "@/contexts/LangContext";
 import { tChrome } from "@/lib/chrome-i18n";
+import { scrollToLandingSection } from "@/lib/landing-scroll";
 import { localizedPath } from "@/lib/paths";
 import { resolveSeo, useHeadTags } from "@/lib/seo";
 import {
@@ -48,7 +49,7 @@ const Landing = ({ section }: { section?: "features" | "how" }) => {
       return;
     }
     if (!section) return;
-    const frame = requestAnimationFrame(() => document.getElementById(section)?.scrollIntoView({ behavior: "instant" }));
+    const frame = requestAnimationFrame(() => scrollToLandingSection(section, "instant"));
     return () => cancelAnimationFrame(frame);
   }, [section, hash, lang, navigate]);
   const hero = getHeroVM(lang);
