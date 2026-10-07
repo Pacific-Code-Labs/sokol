@@ -3,7 +3,7 @@
 .premium-landing .container { max-width: 1240px; }
 .premium-landing h1, .premium-landing h2, .premium-landing h3, .premium-landing p { margin: 0; }
 .premium-landing h1, .premium-landing h2 { font-weight: 550; letter-spacing: -.055em; text-wrap: balance; }
-.premium-landing h2 { font-size: clamp(2rem, 3.5vw, 3.3rem); line-height: 1.13; }
+.premium-landing h2, .premium-section-heading h1 { font-size: clamp(2rem, 3.5vw, 3.3rem); line-height: 1.13; }
 .premium-landing h3 { font-size: 1.125rem; font-weight: 550; letter-spacing: -.025em; line-height: 1.4; }
 .premium-landing p { color: hsl(var(--muted-foreground)); line-height: 1.75; }
 .premium-eyebrow { display: block; color: hsl(var(--primary)); font-size: .68rem; font-weight: 650; letter-spacing: .16em; text-transform: uppercase; line-height: 1.6; }
@@ -185,7 +185,7 @@
 @media (max-height: 650px) and (min-width: 640px) {
   .premium-how { padding-block: .75rem; scroll-margin-top: 4.5rem; }
   .premium-how .premium-section-heading { margin-bottom: .75rem; }
-  .premium-how h2 { font-size: clamp(1.5rem, 3vw, 2.25rem); }
+  .premium-how :is(h1, h2) { font-size: clamp(1.5rem, 3vw, 2.25rem); }
   .premium-how .workflow-panel { padding: 1.25rem; }
   .premium-how .workflow-orbit { width: 104px; height: 104px; }
   .premium-how .workflow-visual { padding-block: .5rem; }
@@ -196,7 +196,7 @@
   .premium-how .workflow-panel .premium-text-link { margin-top: .5rem; }
 }
 @media (max-height: 500px) and (min-width: 640px) {
-  .premium-how h2 { font-size: 1.25rem; }
+  .premium-how :is(h1, h2) { font-size: 1.25rem; }
   .premium-how .premium-section-heading .premium-eyebrow { margin-bottom: .25rem; }
   .premium-how .workflow-panel { padding: 1.25rem; }
   .premium-how .workflow-orbit { width: 88px; height: 88px; }

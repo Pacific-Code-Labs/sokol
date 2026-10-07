@@ -6,7 +6,7 @@
   "packageManager": "pnpm@10.33.2",
   "scripts": {
     "dev": "vite",
-    "build": "pnpm check:i18n && pnpm check:text && tsc -p tsconfig.app.json --noEmit && vite build && pnpm run seo:prerender && pnpm check:social-previews && pnpm check:bundle",
+    "build": "pnpm check:i18n && pnpm check:text && tsc -p tsconfig.app.json --noEmit && vite build && pnpm run seo:prerender && pnpm check:social-previews && pnpm check:bundle && pnpm check:static",
     "check:i18n": "node scripts/check-i18n.mjs",
     "check:bundle": "node scripts/check-bundle.mjs",
     "seo:prerender": "node scripts/prerender.mjs",
@@ -17,7 +17,8 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "inventory": "node scripts/build-inventory.mjs",
-    "check:text": "node scripts/find-hardcoded-text.mjs"
+    "check:text": "node scripts/find-hardcoded-text.mjs",
+    "check:static": "node scripts/check-static.mjs"
   },
   "dependencies": {
     "@dagrejs/dagre": "^1.1.8",
@@ -83,6 +84,7 @@
     "eslint-plugin-react-refresh": "^0.4.20",
     "globals": "^15.15.0",
     "jsdom": "^20.0.3",
+    "playwright": "1.62.1",
     "postcss": "^8.5.6",
     "tailwindcss": "^3.4.17",
     "typescript": "^5.8.3",

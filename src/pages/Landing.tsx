@@ -63,6 +63,7 @@ const Landing = ({ section }: { section?: "features" | "how" }) => {
     <LazyMotion features={domAnimation} strict>
     <MotionConfig reducedMotion="user">
     <div className="premium-landing">
+      {!section && <>
       <ScrollSection className="premium-hero" aria-labelledby="landing-title">
         <div className="hero-atmosphere" aria-hidden="true" />
         <div className="container premium-hero-grid">
@@ -100,19 +101,20 @@ const Landing = ({ section }: { section?: "features" | "how" }) => {
         </div>
       </ScrollSection>
 
-      <ScrollSection id="features" className="premium-section premium-features" aria-labelledby="features-title">
+      </>}
+      {(!section || section === "features") && <ScrollSection id="features" className="premium-section premium-features" aria-labelledby="features-title">
         <div className="container">
-          <Reveal className="premium-section-heading"><span className="premium-eyebrow">{features.heading.eyebrow}</span><h2 id="features-title">{features.heading.title}</h2></Reveal>
+          <Reveal className="premium-section-heading"><span className="premium-eyebrow">{features.heading.eyebrow}</span>{section ? <h1 id="features-title">{features.heading.title}</h1> : <h2 id="features-title">{features.heading.title}</h2>}</Reveal>
           <div className="premium-feature-grid">{features.cards.map((card, i) => <FeatureCard key={card.id} card={card} index={i} />)}</div>
         </div>
-      </ScrollSection>
+      </ScrollSection>}
 
-      <ScrollSection id="how" className="premium-section premium-how" aria-labelledby="how-title">
+      {(!section || section === "how") && <ScrollSection id="how" className="premium-section premium-how" aria-labelledby="how-title">
         <div className="container">
-          <Reveal className="premium-section-heading"><span className="premium-eyebrow">{how.heading.eyebrow}</span><h2 id="how-title">{how.heading.title}</h2></Reveal>
+          <Reveal className="premium-section-heading"><span className="premium-eyebrow">{how.heading.eyebrow}</span>{section ? <h1 id="how-title">{how.heading.title}</h1> : <h2 id="how-title">{how.heading.title}</h2>}</Reveal>
           <Reveal><Workflow cards={how.cards} preview={hero.preview} demoHref={demoHref} cta={hero.ctaPrimary} previousLabel={chrome.nav.previousStep} nextLabel={chrome.nav.nextStep} /></Reveal>
         </div>
-      </ScrollSection>
+      </ScrollSection>}
 
       <ScrollSection className="premium-cta-section" aria-labelledby="cta-title">
         <div className="container"><Reveal className="premium-cta"><div className="cta-orbits" aria-hidden="true"><i /><i /><i /></div><span className="premium-icon"><AnimatedIcon Icon={ShieldCheck} /></span><h2 id="cta-title">{cta.title}</h2><p>{cta.subtitle}</p><Button asChild size="lg" className="premium-button"><Link to={demoHref}>{cta.button}<ArrowRight aria-hidden="true" /></Link></Button></Reveal></div>

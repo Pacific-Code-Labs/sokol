@@ -5,6 +5,7 @@ import { Toaster as Sonner, TooltipProvider } from "@pacific-code-labs/sokol-des
 import Landing from "./pages/Landing.tsx";
 import Pricing from "./pages/Pricing.tsx";
 import NotFound from "./pages/NotFound.tsx";
+import Legal from "./pages/Legal";
 import { LangProvider } from "@/contexts/LangContext";
 import { ThemeProvider } from "@/contexts/ThemeContext";
 import { AssistantProvider } from "@/contexts/AssistantContext";
@@ -64,6 +65,11 @@ const App = () => (
               <Route path="how" element={<Landing section="how" />} />
               <Route path="demo" element={<Suspense fallback={<DemoSkeleton />}><Index /></Suspense>} />
               <Route path="pricing" element={<Pricing />} />
+              <Route path="privacy" element={<Legal pageKey="privacy" />} />
+              <Route path="cookies" element={<Legal pageKey="cookies" />} />
+              <Route path="terms" element={<Legal pageKey="terms" />} />
+              <Route path="contact" element={<Legal pageKey="contact" />} />
+              <Route path="about" element={<Legal pageKey="about" />} />
               <Route path=":segment/*" element={<LangChild />} />
             </Route>
 

@@ -26,6 +26,7 @@ import { SiteFooter } from "@/components/SiteFooter";
 import { PLAN_ORDER, PLANS, type PlanConfig, type PlanTier } from "@/lib/plans";
 import type { Dict } from "@/lib/i18n";
 import { appHref, newTab } from "@/lib/links";
+import { resolveSeo, useHeadTags } from "@/lib/seo";
 
 function fill(template: string, vars: Record<string, string | number>): string {
   return template.replace(/\{(\w+)\}/g, (_, k) => String(vars[k] ?? ""));
@@ -60,6 +61,7 @@ function planFeatures(plan: PlanConfig, tr: Dict): string[] {
 
 export default function Pricing() {
   const { lang, tr } = useLang();
+  useHeadTags(resolveSeo("pricing", lang), lang, "pricing");
   const plans = useQuery({ queryKey: ["plans"], queryFn: () => sokolApi.getPlans(), staleTime: 60_000 });
 
   return (

@@ -5,6 +5,7 @@ import { localizedPath } from "@/lib/paths";
 import { appHref, newTab } from "@/lib/links";
 import { getBrandingVM } from "@/services/branding.service";
 import { getFooterVM } from "@/services/landing.service";
+import { legalContent } from "@/legal/LegalBody";
 
 const linkCls = "hover:text-primary transition-colors";
 
@@ -23,7 +24,7 @@ export function SiteFooter() {
   return (
     <footer className="border-t border-border bg-muted/40 no-print">
       <div className="container pt-8 pb-6">
-        <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
+        <div className="grid grid-cols-2 gap-8 md:grid-cols-5">
           {/* Brand */}
           <div className="col-span-2">
             <Link to={localizedPath(lang, "/")} className="mb-4 inline-flex items-center gap-2 hover:opacity-80 transition-opacity">
@@ -49,6 +50,12 @@ export function SiteFooter() {
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li><a href={appHref(lang, "/login")} {...newTab} className={linkCls}>{footer.links.signIn}</a></li>
               <li><a href={appHref(lang, "/register")} {...newTab} className={linkCls}>{footer.links.signUp}</a></li>
+            </ul>
+          </div>
+          <div>
+            <h3 className="mb-3 text-sm font-semibold">{legalContent.labels.legal[lang]}</h3>
+            <ul className="space-y-2 text-sm text-muted-foreground">
+              {Object.entries(legalContent.pages).map(([key, page]) => <li key={key}><Link className={linkCls} to={localizedPath(lang, `/${key}`)}>{page.title[lang]}</Link></li>)}
             </ul>
           </div>
         </div>

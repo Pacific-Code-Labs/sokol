@@ -104,5 +104,8 @@ export function useHeadTags(resolved: ResolvedSeo, lang: Lang, route?: string): 
 
     // robots: noindex for 404, index otherwise.
     upsertMeta('meta[name="robots"]', "name", "robots", resolved.noindex ? "noindex,follow" : "index,follow");
+    let schema = document.getElementById("site-page-schema") as HTMLScriptElement | null;
+    if (!schema) { schema = document.createElement("script"); schema.id = "site-page-schema"; schema.type = "application/ld+json"; document.head.appendChild(schema); }
+    schema.textContent = JSON.stringify({ "@context": "https://schema.org", "@type": "WebPage", name: resolved.title, description: resolved.description, url: resolved.canonical, inLanguage: lang }).replace(/</g, "\\u003c");
   }, [resolved.title, resolved.description, resolved.canonical, resolved.ogImage, resolved.noindex, lang, route]);
 }

@@ -10,10 +10,11 @@ import { initBrand } from "./lib/brand-theme";
 import { initContent, refreshContent } from "./repositories/content.repository";
 
 // Load the published documents from the public API before the first render. The cached copy (or
-// bundled JSON) remains available if the API is unavailable. No CMS content is baked in by CI.
+// bundled JSON) remains available if the API is unavailable. The build also snapshots public
+// content into initial HTML; runtime refresh keeps interactive visits up to date.
 initContent();
 const root = createRoot(document.getElementById("root")!);
-root.render(
+if (!document.getElementById("root")!.hasChildNodes()) root.render(
   <main className="container min-h-screen animate-pulse py-8" aria-busy="true">
     <div className="mb-16 flex items-center justify-between">
       <div className="h-9 w-28 rounded bg-muted" />

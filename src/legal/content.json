@@ -1,0 +1,284 @@
+{
+  "updated": "2026-10-07",
+  "operator": {
+    "name": "Pacific Code Labs",
+    "address": "Puntarenas, Puntarenas. Barrio El Cocal. Calle 32, Costa Rica",
+    "email": "pacificcoelabs@gmail.com"
+  },
+  "labels": {
+    "updated": {
+      "es": "Última actualización",
+      "en": "Last updated"
+    },
+    "legal": {
+      "es": "Información y condiciones",
+      "en": "Information and terms"
+    },
+    "home": {
+      "es": "Inicio",
+      "en": "Home"
+    }
+  },
+  "pages": {
+    "privacy": {
+      "title": {
+        "es": "Política de privacidad",
+        "en": "Privacy policy"
+      },
+      "description": {
+        "es": "Política de privacidad de Sóköl. Información de Pacific Code Labs y contacto.",
+        "en": "Privacy policy for Sóköl. Pacific Code Labs information and contact."
+      },
+      "sections": [
+        {
+          "heading": {
+            "es": "Responsable y contacto",
+            "en": "Operator and contact"
+          },
+          "body": {
+            "es": "Sóköl es operado por Pacific Code Labs. Dirección: Puntarenas, Puntarenas. Barrio El Cocal. Calle 32, Costa Rica. Para consultas sobre el servicio o privacidad, escribí a pacificcoelabs@gmail.com.",
+            "en": "Sóköl is operated by Pacific Code Labs. Address: Puntarenas, Puntarenas. Barrio El Cocal. Calle 32, Costa Rica. For service or privacy questions, email pacificcoelabs@gmail.com."
+          }
+        },
+        {
+          "heading": {
+            "es": "Información y finalidades",
+            "en": "Information and purposes"
+          },
+          "body": {
+            "es": "Datos de cuenta y contacto, información de los proyectos y edificios que ingresás, preguntas y resultados del asistente, y datos técnicos de uso y seguridad. Usamos esta información para prestar las funciones que solicitás, administrar la cuenta, responder consultas, mantener la seguridad y cumplir las obligaciones aplicables. El sitio público también recibe información técnica de las solicitudes, como la dirección IP y el navegador.",
+            "en": "Account and contact details, project and building information you enter, assistant questions and results, and technical usage and security data. We use this information to provide requested features, administer your account, answer questions, maintain security and meet applicable obligations. The public site also receives technical request information, such as IP address and browser."
+          }
+        },
+        {
+          "heading": {
+            "es": "Datos necesarios y comunicaciones",
+            "en": "Required information and communications"
+          },
+          "body": {
+            "es": "Los datos necesarios para una cuenta o una función se solicitan en el flujo correspondiente. Si no los proporcionás, esa función puede no estar disponible; podés navegar las páginas informativas sin crear una cuenta. En esta etapa enviamos únicamente correos transaccionales relacionados con la cuenta, la seguridad o las operaciones solicitadas. No enviamos campañas promocionales.",
+            "en": "Information needed for an account or feature is requested in the relevant flow. Without it, that feature may be unavailable; you can browse informational pages without an account. At this stage we send only transactional emails relating to accounts, security or requested operations. We do not send promotional campaigns."
+          }
+        },
+        {
+          "heading": {
+            "es": "Servicios y destinatarios",
+            "en": "Services and recipients"
+          },
+          "body": {
+            "es": "Las evaluaciones con IA utilizan Microsoft Azure AI Foundry, además de infraestructura de Amazon Web Services. Los datos de la consulta se procesan para generar la respuesta solicitada. Las páginas públicas se distribuyen mediante GitHub Pages. El alojamiento y las solicitudes a proveedores pueden implicar procesamiento fuera de Costa Rica. El acceso por proveedores se relaciona con la prestación y protección del servicio.",
+            "en": "AI evaluations use Microsoft Azure AI Foundry alongside Amazon Web Services infrastructure. Query data is processed to generate the requested response. Public pages are distributed through GitHub Pages. Hosting and provider requests may involve processing outside Costa Rica. Provider access relates to delivering and protecting the service."
+          }
+        },
+        {
+          "heading": {
+            "es": "Conservación",
+            "en": "Retention"
+          },
+          "body": {
+            "es": "La conservación depende del tipo de información, la función solicitada y las obligaciones aplicables. Los datos de cuenta y contenido se conservan mientras sean necesarios para el servicio; registros, respaldos y comprobantes pueden requerir plazos diferentes por seguridad u obligaciones legales. Para solicitar eliminación o conocer el tratamiento de un archivo o registro específico, contactanos. La eliminación puede estar limitada por obligaciones de conservación.",
+            "en": "Retention depends on the information type, requested feature and applicable obligations. Account data and content are retained while needed for the service; logs, backups and records may require different periods for security or legal obligations. Contact us to request deletion or ask about a specific file or record. Deletion may be limited by retention duties."
+          }
+        },
+        {
+          "heading": {
+            "es": "Tus derechos y solicitudes",
+            "en": "Your rights and requests"
+          },
+          "body": {
+            "es": "Podés solicitar acceso, rectificación o supresión de tus datos y consultar sobre el consentimiento y los derechos aplicables escribiendo a pacificcoelabs@gmail.com. Indicá el producto y la solicitud; evitá enviar contraseñas o información sensible. Podemos pedir información proporcional para verificar tu identidad y evitar entregar datos a terceros. Atenderemos la solicitud conforme a los plazos y excepciones legales aplicables.",
+            "en": "You can request access, correction or deletion of your data and ask about consent and applicable rights by emailing pacificcoelabs@gmail.com. State the product and request; do not send passwords or sensitive information. We may request proportionate information to verify your identity and prevent disclosure to others. Requests are handled under applicable legal deadlines and exceptions."
+          }
+        },
+        {
+          "heading": {
+            "es": "Almacenamiento del navegador y cambios",
+            "en": "Browser storage and changes"
+          },
+          "body": {
+            "es": "La página de cookies y almacenamiento describe las preferencias y mecanismos técnicos del sitio público. Esta política también se aplica al uso del producto descrito arriba. Publicaremos las revisiones con su fecha; los cambios importantes en el tratamiento se comunicarán por un medio apropiado antes de aplicarlos cuando corresponda.",
+            "en": "The cookies and storage page describes public-site preferences and technical mechanisms. This policy also covers the product use described above. Revisions will carry their update date; significant processing changes will be communicated through an appropriate channel before taking effect where required."
+          }
+        }
+      ]
+    },
+    "cookies": {
+      "title": {
+        "es": "Cookies y almacenamiento",
+        "en": "Cookies and storage"
+      },
+      "description": {
+        "es": "Cookies y almacenamiento de Sóköl. Información de Pacific Code Labs y contacto.",
+        "en": "Cookies and storage for Sóköl. Pacific Code Labs information and contact."
+      },
+      "sections": [
+        {
+          "heading": {
+            "es": "Cookies y tecnologías similares",
+            "en": "Cookies and similar technologies"
+          },
+          "body": {
+            "es": "Las cookies son una forma de almacenar información en el navegador. También existen localStorage y sessionStorage, que no son cookies HTTP. Este aviso describe el sitio público; las funciones con sesión iniciada pueden utilizar almacenamiento adicional para autenticación y operación.",
+            "en": "Cookies are one way to store information in a browser. localStorage and sessionStorage are different from HTTP cookies. This notice describes the public site; signed-in features may use additional storage for authentication and operation."
+          }
+        },
+        {
+          "heading": {
+            "es": "Almacenamiento local",
+            "en": "Local storage"
+          },
+          "body": {
+            "es": "Este sitio utiliza almacenamiento local del navegador para preferencias y funcionamiento técnico. Claves: sokol-lang, sokol.theme, sokol-content-landing, sokol-public-identity. Los valores permanecen hasta que se reemplazan o eliminan desde el sitio o la configuración del navegador.",
+            "en": "This site uses browser local storage for preferences and technical operation. Keys: sokol-lang, sokol.theme, sokol-content-landing, sokol-public-identity. Values remain until replaced or removed by the site or through browser settings."
+          }
+        },
+        {
+          "heading": {
+            "es": "Almacenamiento de sesión",
+            "en": "Session storage"
+          },
+          "body": {
+            "es": "sokol-public-guest: conserva el estado técnico del acceso público durante la sesión de la pestaña y se elimina al cerrar esa sesión. Las identidades de acceso público permiten solicitar contenido a Amazon Web Services y no se utilizan aquí como identificadores publicitarios.",
+            "en": "sokol-public-guest: holds technical public-access state during the tab session and is removed when that session ends. Public-access identities allow content requests to Amazon Web Services and are not used here as advertising identifiers."
+          }
+        },
+        {
+          "heading": {
+            "es": "Servicios externos y seguimiento opcional",
+            "en": "External services and optional tracking"
+          },
+          "body": {
+            "es": "El contenido público utiliza servicios de Amazon Web Services. Algunas tipografías se solicitan a Google Fonts, lo que genera solicitudes a Google con información técnica de conexión. En este lanzamiento no activamos analítica opcional ni rastreadores publicitarios. Si introducimos tecnologías opcionales sujetas a consentimiento, actualizaremos el aviso y ofreceremos controles antes de activarlas.",
+            "en": "Public content uses Amazon Web Services. Some fonts are requested from Google Fonts, generating requests to Google with technical connection information. This launch does not enable optional analytics or advertising trackers. If we introduce optional technologies requiring consent, we will update this notice and provide controls before activation."
+          }
+        },
+        {
+          "heading": {
+            "es": "Cómo controlar el almacenamiento",
+            "en": "How to control storage"
+          },
+          "body": {
+            "es": "Podés revisar o borrar los datos del sitio desde la configuración de privacidad de tu navegador y cambiar el tema o idioma desde los controles disponibles. Borrar o bloquear el almacenamiento puede restablecer preferencias o afectar funciones. Para consultas, escribí a pacificcoelabs@gmail.com.",
+            "en": "You can inspect or clear site data in your browser’s privacy settings and change theme or language using available controls. Clearing or blocking storage may reset preferences or affect features. For questions, email pacificcoelabs@gmail.com."
+          }
+        }
+      ]
+    },
+    "terms": {
+      "title": {
+        "es": "Términos de uso",
+        "en": "Terms of use"
+      },
+      "description": {
+        "es": "Términos de uso de Sóköl. Información de Pacific Code Labs y contacto.",
+        "en": "Terms of use for Sóköl. Pacific Code Labs information and contact."
+      },
+      "sections": [
+        {
+          "heading": {
+            "es": "Responsable y contacto",
+            "en": "Operator and contact"
+          },
+          "body": {
+            "es": "Sóköl es operado por Pacific Code Labs. Dirección: Puntarenas, Puntarenas. Barrio El Cocal. Calle 32, Costa Rica. Para consultas sobre el servicio o privacidad, escribí a pacificcoelabs@gmail.com.",
+            "en": "Sóköl is operated by Pacific Code Labs. Address: Puntarenas, Puntarenas. Barrio El Cocal. Calle 32, Costa Rica. For service or privacy questions, email pacificcoelabs@gmail.com."
+          }
+        },
+        {
+          "heading": {
+            "es": "Uso del servicio",
+            "en": "Using the service"
+          },
+          "body": {
+            "es": "Asistente para interpretar requisitos de protección contra incendios y normativa eléctrica en Costa Rica. Al crear una cuenta o utilizar funciones del producto, debés usarlo de manera lícita, proporcionar información correcta y proteger tus credenciales. No se permite acceder a cuentas ajenas, interferir con el servicio ni cargar contenido sin autorización.",
+            "en": "An assistant for interpreting fire-protection requirements and electrical regulations in Costa Rica. When creating an account or using product features, use the service lawfully, provide accurate information and protect your credentials. Accessing other accounts, interfering with the service or uploading content without authorization is prohibited."
+          }
+        },
+        {
+          "heading": {
+            "es": "Alcance y responsabilidad",
+            "en": "Scope and responsibility"
+          },
+          "body": {
+            "es": "No ingresés datos personales innecesarios en las consultas. Los resultados orientan la revisión y no sustituyen el criterio profesional, la edición aplicable de las normas ni las decisiones de las autoridades.",
+            "en": "Do not enter unnecessary personal data in queries. Results support review and do not replace professional judgment, the applicable standards edition, or decisions by authorities."
+          }
+        },
+        {
+          "heading": {
+            "es": "Contenido y privacidad",
+            "en": "Content and privacy"
+          },
+          "body": {
+            "es": "Conservás los derechos que te correspondan sobre el contenido que enviás. Su procesamiento se limita a las operaciones necesarias para prestar las funciones solicitadas y cumplir las obligaciones aplicables. No cargués información de terceros sin una base válida. La política de privacidad explica el tratamiento de datos y cómo ejercer tus derechos.",
+            "en": "You retain the rights you hold in submitted content. Processing relates to operations needed to provide requested features and meet applicable obligations. Do not upload others’ information without a valid basis. The privacy policy explains data processing and how to exercise your rights."
+          }
+        },
+        {
+          "heading": {
+            "es": "Planes, disponibilidad y cambios",
+            "en": "Plans, availability and changes"
+          },
+          "body": {
+            "es": "Las funciones, límites y precios aplicables se muestran en las páginas de planes y en el flujo correspondiente antes de contratar. La disponibilidad puede verse afectada por mantenimiento o fallos. Publicaremos cambios en estas condiciones e informaremos cambios relevantes por un medio apropiado. Estas condiciones no excluyen derechos obligatorios reconocidos por la legislación aplicable.",
+            "en": "Applicable features, limits and prices appear on plan pages and in the relevant flow before purchase. Maintenance or failures may affect availability. We will publish changes to these terms and communicate material changes through an appropriate channel. These terms do not exclude mandatory rights under applicable law."
+          }
+        }
+      ]
+    },
+    "contact": {
+      "title": {
+        "es": "Contacto",
+        "en": "Contact"
+      },
+      "description": {
+        "es": "Contacto de Sóköl. Información de Pacific Code Labs y contacto.",
+        "en": "Contact for Sóköl. Pacific Code Labs information and contact."
+      },
+      "sections": [
+        {
+          "heading": {
+            "es": "Responsable y contacto",
+            "en": "Operator and contact"
+          },
+          "body": {
+            "es": "Sóköl es operado por Pacific Code Labs. Dirección: Puntarenas, Puntarenas. Barrio El Cocal. Calle 32, Costa Rica. Para consultas sobre el servicio o privacidad, escribí a pacificcoelabs@gmail.com.",
+            "en": "Sóköl is operated by Pacific Code Labs. Address: Puntarenas, Puntarenas. Barrio El Cocal. Calle 32, Costa Rica. For service or privacy questions, email pacificcoelabs@gmail.com."
+          }
+        }
+      ]
+    },
+    "about": {
+      "title": {
+        "es": "Acerca de Sóköl",
+        "en": "About Sóköl"
+      },
+      "description": {
+        "es": "Acerca de Sóköl de Sóköl. Información de Pacific Code Labs y contacto.",
+        "en": "About Sóköl for Sóköl. Pacific Code Labs information and contact."
+      },
+      "sections": [
+        {
+          "heading": {
+            "es": "El producto",
+            "en": "The product"
+          },
+          "body": {
+            "es": "Asistente para interpretar requisitos de protección contra incendios y normativa eléctrica en Costa Rica.",
+            "en": "An assistant for interpreting fire-protection requirements and electrical regulations in Costa Rica."
+          }
+        },
+        {
+          "heading": {
+            "es": "Responsable y contacto",
+            "en": "Operator and contact"
+          },
+          "body": {
+            "es": "Sóköl es operado por Pacific Code Labs. Dirección: Puntarenas, Puntarenas. Barrio El Cocal. Calle 32, Costa Rica. Para consultas sobre el servicio o privacidad, escribí a pacificcoelabs@gmail.com.",
+            "en": "Sóköl is operated by Pacific Code Labs. Address: Puntarenas, Puntarenas. Barrio El Cocal. Calle 32, Costa Rica. For service or privacy questions, email pacificcoelabs@gmail.com."
+          }
+        }
+      ]
+    }
+  }
+}

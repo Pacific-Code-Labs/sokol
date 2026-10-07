@@ -43,6 +43,10 @@ it("updates OG and Twitter together when navigating between languages", () => {
     expect(document.querySelector('meta[name="twitter:image"]')?.getAttribute("content")).toBe(image);
     expect(document.querySelector('meta[property="og:url"]')?.getAttribute("content")).toBe(`https://sokol.jcampos.dev/${lang}/pricing`);
     expect(document.querySelectorAll('meta[property="og:image"]')).toHaveLength(1);
+    const schema = JSON.parse(document.getElementById("site-page-schema")!.textContent!);
+    expect(schema.url).toBe(`https://sokol.jcampos.dev/${lang}/pricing`);
+    expect(schema.inLanguage).toBe(lang);
+    expect(document.querySelectorAll("#site-page-schema")).toHaveLength(1);
   }
 });
 

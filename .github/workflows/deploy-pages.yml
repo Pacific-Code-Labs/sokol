@@ -1,7 +1,8 @@
 name: Deploy to GitHub Pages (sokol.jcampos.dev)
 
 # The public landing. Published content is fetched by the browser from the public API when
-# the page loads; the build uses committed content only as a fallback and for static SEO tags.
+# the page loads. The build renders published public content into crawlable HTML;
+# committed content is a fallback when the public API is unavailable.
 on:
   push:
     branches: [main]
@@ -33,6 +34,9 @@ jobs:
           cache: pnpm
 
       - run: pnpm install --frozen-lockfile
+
+      - name: Install static-rendering browser
+        run: pnpm exec playwright install --with-deps chromium
 
       # Read-only role from sokol-infrastructure web/web-params.yml (trusts this repo).
       - uses: aws-actions/configure-aws-credentials@v4
